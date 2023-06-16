@@ -1,0 +1,332 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+          <h1>대출기간 설정</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>기본관리정책</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>대출 기간 설정 </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+          <div class="cont-whitebox">
+
+            <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title">
+                  <h2>대출기간 설정 </h2>
+                </div>
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">사용여부</label>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining2" value="2" checked>
+                        <label for="joining2">사용</label>
+                      </div>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining3" value="3">
+                        <label for="joining3">미사용</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">은행국가</label>
+                      <div class="fl-l select-box">
+                        <select id="countryList">
+                          <option value="KR">한국</option>
+                          <option value="JP">일본 </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">대출기간 </label>
+                      <div class="fl-l select-box">
+                        <select id="bankList">
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+
+
+                <!-- 셀렉트박스 -->
+                <script src="../views/include/minimalect/minimalect.js?c=201305202005"></script>
+                <script>
+                  $(document).ready(function() {
+                    $("#Select-type").minimalect();
+                  });
+                </script>
+
+
+
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">시작기간 </label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" id="account">
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">종료기간</label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" id="userName">
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+
+
+                <!-- <div class="form-tr row bg-grey">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">변경자</label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" value="홍길동" readonly>
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">변경자 연락처</label>
+                      <div class="input-btn-box fl-l">
+                        <input type="text" class="input" value="010 0000 0000" readonly>
+                        <a class="btn-input">인증번호받기</a>
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!--form-tr-->
+
+                <!-- <div class="form-tr row bg-grey">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">인증번호</label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" value="">
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!--form-tr-->
+
+              </div>
+              <!--from-section-->
+
+              <div class="from-section m-0">
+
+                <!-- 수정-->
+                <div class="form-btn-box m-0" style="display:none;">
+                  <a class="btn-change">변경사항 저장하기</a>
+                </div>
+                <!-- 등록 display:none 지우고 하시면 됩니다. -->
+                <div class="form-btn-box m-0">
+                  <a class="btn-change" onclick="saveBank()">설정기간저장</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div>
+            <!--conts-box-->
+
+
+            <!-- <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">무통장입금 은행 변경 내역</h2>
+                </div>
+
+                <div class="table-box admin-chenge">
+                  <div class="table-over-box">
+                    <table border="0">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>은행명</th>
+                          <th>계좌번호</th>
+                          <th>예금주명</th>
+                          <th>최종변경자</th>
+                          <th>변경자연락처</th>
+                          <th>변경일</th>
+                          <th>사용여부</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>2</td>
+                          <td>홍콩은행</td>
+                          <td>000 00 000000</td>
+                          <td>홍콩반점</td>
+                          <td>홍콩할매 (admin)</td>
+                          <td>82. 010 0000 0000</td>
+                          <td>2018.03.15</td>
+                          <td>사용</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td>판다은행</td>
+                          <td>000 00 000000</td>
+                          <td>드래곤워리어</td>
+                          <td>포 (aabbcc)</td>
+                          <td>82. 010 0000 0000</td>
+                          <td>2018.03.15</td>
+                          <td>미사용</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="paging fl-r">
+                    <ul class="row">
+                      <li><a><i class="fa fa-angle-left"></i></a></li>
+                      <li><a class="active">1</a></li>
+                      <li><a>2</a></li>
+                      <li><a>3</a></li>
+                      <li><a>4</a></li>
+                      <li><a>5</a></li>
+                      <li><a><i class="fa fa-angle-right"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div> -->
+            <!--conts-box-->
+
+
+
+          </div>
+        </section>
+
+
+
+
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+</body>
+
+
+
+
+
+
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+var ListDATA=[]
+var COUNTRYDATA=[]
+  $(document).ready(() => {
+    getList()
+  })
+
+  function getList() {
+    var param = {}
+    param['COUNTRY_CODE'] = 'KR'
+    reqApiList({
+      URL: 'getBankList',
+      PARAM: param
+    }).then((data) => {
+      console.log(data);
+      ListDATA = data.BANKLIST
+      $("#bankList").empty()
+      var innerHtml = ""
+      for (var i = 0; i < ListDATA.length; i++) {
+        innerHtml += '<option value="' + ListDATA[i].B_CODE + '">' + ListDATA[i].B_NAME + '</option>';
+      }
+      $("#bankList").append(innerHtml)
+    })
+    reqApiList({
+      URL: 'getCountry',
+      PARAM: param
+    }).then((data) => {
+      COUNTRYDATA = data.COUNTRYLIST
+      console.log(data)
+      $("#countryList").empty()
+      var innerHtml = ""
+      for (var i = 0; i < COUNTRYDATA.length; i++) {
+        innerHtml += '<option value="' + COUNTRYDATA[i].Q_CODE + '">' + COUNTRYDATA[i].Q_KNAME + '</option>';
+      }
+      $("#countryList").append(innerHtml)
+    })
+  }
+
+  function saveBank() {
+    var selectedBank=ListDATA[$("#bankList").val()]
+    var param = {}
+    param['USE_YN'] = $("#joining2").is(":checked") ? "Y":"N"
+    param['COUNTRY'] = "KR"
+    param['SITE_COIN'] = "01"
+    param['B_CODE'] = $("#bankList").val()
+    param['B_IDNO'] = $("#account").val()
+    param['UN_EB_OWNER'] = $("#userName").val()
+
+    reqApi({
+      URL: 'addAdminBank',
+      PARAM: param
+    }).then(data=>{
+      if(data.ADMINBANK.RESULT === 0){
+        alert("정상등록 처리 되었습니다.")
+        location.href="/default/bankbook-list"
+      }else if(data.ADMINBANK.RESULT === 1){
+        alert("사용자아이디가 없는경우")
+      } else if (data.ADMINBANK.RESULT === 2) {
+        alert("은행코드가 없는경우")
+      } else if (data.ADMINBANK.RESULT === 3) {
+        alert("계좌번호를 입력하세요")
+      } else if (data.ADMINBANK.RESULT === 4) {
+        alert("예금주를 입력하세요")
+      }else if(data.ADMINBANK.RESULT === 5){
+        alert("이미 등록된 은행입니다.")
+      }
+    })
+  }
+</script>

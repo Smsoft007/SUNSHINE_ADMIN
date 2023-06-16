@@ -1,0 +1,364 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+          <h1>기축통화 환율 등록 수정 </h1>
+          <div class="row">
+            <p class="fl-l">기축통화 환율정보 수정 변경 할 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>기본관리정책</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>환율 등록 수정 설정</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+          <div class="cont-whitebox">
+
+            <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title">
+                  <h2>기축통화 환율 등록 수정</h2>
+                </div>
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">사용여부</label>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining2" value="2" checked>
+                        <label for="joining2">사용</label>
+                      </div>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining3" value="3">
+                        <label for="joining3">미사용</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="from-section">
+                    <div class="form-tr row">
+                      <div class="w50p fl-l">
+                        <div class="form-box row">
+                          <label class="fl-l">TEC환율</label>
+                          <div class="fl-l select-box">
+                            <select id="GUBUN">
+                              <option value="A" selected>전체</option>
+                              <option value="10">KRW</option>
+                              <option value="20">USD</option>
+                              <option value="30">JPY</option>
+                              <option value="40">CNY</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w50p fl-l">
+                        <div class="form-box row">
+                          <label class="fl-l">거래일자 설정</label>
+                          <div class="fl-l calendar-input-box" id="Search-time">
+                            <div class="row">
+                              <div class="calendar-input-btn-box fl-l">
+                                <input type="text" id="datepicker1">
+                              </div>
+                              <span class="fl-l"> ~ </span>
+                              <div class="calendar-input-btn-box fl-l">
+                                <input type="text" id="datepicker2">
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                    <script>
+                      $(function() {
+                        $("#datepicker1, #datepicker2").datepicker({
+                          dateFormat: 'yy.mm.dd',
+                          showOn: "both",
+                          buttonImage: "../views/images/calendar-5.png",
+                          buttonImageOnly: true,
+                          buttonText: "Select date"
+                        });
+                      });
+                    </script>
+                  </div>
+                  <div class="from-section mb-0">
+                </div>
+                <!--form-tr-->
+
+
+
+                <!-- 셀렉트박스 -->
+                <script src="../views/include/minimalect/minimalect.js?c=201305202005"></script>
+                <script>
+                  $(document).ready(function() {
+                    $("#Select-type").minimalect();
+                  });
+                </script>
+
+
+
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">구분</label>
+                      <div class="fl-l select-box">
+                        <select id="SGUBUN">
+                          <option value="0">선택</option>
+                          <option value="SELL">판매</option>
+                          <option value="BUY">구매</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">설정금액</label>
+                      <div class="input-box fl-l">
+                        <input type="number" class="input" id="rate">
+                        <p class="error">%) </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+
+
+                <!-- <div class="form-tr row bg-grey">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">변경자</label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" value="홍길동" readonly>
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">변경자 연락처</label>
+                      <div class="input-btn-box fl-l">
+                        <input type="text" class="input" value="010 0000 0000" readonly>
+                        <a class="btn-input">인증번호받기</a>
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!--form-tr-->
+
+                <!-- <div class="form-tr row bg-grey">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">인증번호</label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" value="">
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!--form-tr-->
+
+              </div>
+              <!--from-section-->
+
+              <div class="from-section m-0">
+
+                <!-- 수정-->
+                <div class="form-btn-box m-0" style="display:none;">
+                  <a class="btn-change">환율 변경 저장 </a>
+                </div>
+                <!-- 등록 display:none 지우고 하시면 됩니다. -->
+                <div class="form-btn-box m-0">
+                  <a class="btn-change" onclick="Saverate()">환율변경 저장 </a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+
+
+
+
+            </div>
+            <!--conts-box-->
+
+
+            <!-- <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">무통장입금 은행 변경 내역</h2>
+                </div>
+
+                <div class="table-box admin-chenge">
+                  <div class="table-over-box">
+                    <table border="0">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>은행명</th>
+                          <th>계좌번호</th>
+                          <th>예금주명</th>
+                          <th>최종변경자</th>
+                          <th>변경자연락처</th>
+                          <th>변경일</th>
+                          <th>사용여부</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>2</td>
+                          <td>홍콩은행</td>
+                          <td>000 00 000000</td>
+                          <td>홍콩반점</td>
+                          <td>홍콩할매 (admin)</td>
+                          <td>82. 010 0000 0000</td>
+                          <td>2018.03.15</td>
+                          <td>사용</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td>판다은행</td>
+                          <td>000 00 000000</td>
+                          <td>드래곤워리어</td>
+                          <td>포 (aabbcc)</td>
+                          <td>82. 010 0000 0000</td>
+                          <td>2018.03.15</td>
+                          <td>미사용</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="paging fl-r">
+                    <ul class="row">
+                      <li><a><i class="fa fa-angle-left"></i></a></li>
+                      <li><a class="active">1</a></li>
+                      <li><a>2</a></li>
+                      <li><a>3</a></li>
+                      <li><a>4</a></li>
+                      <li><a>5</a></li>
+                      <li><a><i class="fa fa-angle-right"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div> -->
+            <!--conts-box-->
+
+
+
+          </div>
+        </section>
+
+
+
+
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+</body>
+
+
+
+
+
+
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+//var ListDATA=[]
+//var COINLIST=[]
+  // $(document).ready(() => {
+  //   getList()
+  // })
+  //
+  // function getList() {
+  //   var param = {}
+  //   param['COUNTRY_CODE'] = 'KR'
+  //   reqApiList({
+  //     URL: 'getBankList',
+  //     PARAM: param
+  //   }).then((data) => {
+  //     console.log(data);
+  //     ListDATA = data.BANKLIST
+  //     $("#bankList").empty()
+  //     var innerHtml = ""
+  //     for (var i = 0; i < ListDATA.length; i++) {
+  //       innerHtml += '<option value="' + ListDATA[i].B_CODE + '">' + ListDATA[i].B_NAME + '</option>';
+  //     }
+  //     $("#bankList").append(innerHtml)
+  //   })
+  //   reqApiList({
+  //     URL: 'getCountry',
+  //     PARAM: param
+  //   }).then((data) => {
+  //     COUNTRYDATA = data.COUNTRYLIST
+  //     console.log(data)
+  //     $("#countryList").empty()
+  //     var innerHtml = ""
+  //     for (var i = 0; i < COUNTRYDATA.length; i++) {
+  //       innerHtml += '<option value="' + COUNTRYDATA[i].Q_CODE + '">' + COUNTRYDATA[i].Q_KNAME + '</option>';
+  //     }
+  //     $("#countryList").append(innerHtml)
+  //   })
+  // }
+
+  function Saverate() {
+    //var selectedBank=ListDATA[$("#bankList").val()]
+    var param = {}
+    param['STATE'] = $("#joining2").is(":checked") ? "Y":"N"
+    param['GUBUN'] = $("#GUBUN").val()
+    param['SDATE'] = $("#datepicker1").val()
+    param['EDATE'] = $("#datepicker2").val()
+    param['RATE'] = $("#rate").val()
+    param['AD_UID'] = "admin"
+
+console.table(param);
+    reqApi({
+      URL: 'addCurrrate',
+      PARAM: param
+    }).then(data=> {
+      console.log(data);
+       if(data.CURRRATESET.RESULT === 0){
+        alert("TEC환율이 정상적으로 변경되었습니다.")
+        location.href="/default/stand-setrate"
+      }else if(data.CURRRATESET.RESULT === 1){
+        alert("코인등록 메뉴에서 코인 등록후 사용하십시오!!")
+      } else if (data.CURRRATESET.RESULT === 2) {
+        alert("코드를 입력하세요")
+      } else if (data.CURRRATESET.RESULT === 3) {
+        alert("설정구분을 입력하세요")
+      } else if (data.CURRRATESET.RESULT === 4) {
+        alert("매도매수 구분을 입력하세요")
+      }else if(data.CURRRATESET.RESULT === 5){
+        alert("이미등록된코드입니다. ")
+      }
+    })
+  }
+</script>

@@ -1,0 +1,469 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>WRD 구매신청</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>구매신청관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>WRD 구매신청</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <ul class="row main-teb-menu">
+              <li><a id="teb-menu1" onclick="changeCoin('WRD')">WRD 신청내역</a></li>
+              <li><a id="teb-menu2" onclick="changeCoin('BTC')">BTC 신청내역</a></li>
+              <li><a id="teb-menu3" onclick="changeCoin('ETH')">ETH 신청내역</a></li>
+            </ul>
+            <div class="main-teb-cont">
+              <div class="teb-conts teb-cont1 p-0">
+                <div class="conts-box pb-0">
+                  <div class="search-box border-l0 border-r0 p-5 bg-grey mb-30">
+                    <div class="row ">
+                      <div class="w100p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">관리자 주소 </label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" id="COINADDR" readonly>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="w33p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">
+                            <data-tag name="SYMBOL"></data-tag> 코인시세
+                          </label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" id="C_LAST_PRICE" readonly>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w33p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">ETH 잔액</label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" readonly id="ETHVAL">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w33p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">
+                            <data-tag name="SYMBOL"></data-tag> 잔액
+                          </label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" readonly id="COINVAL">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--search-box-->
+                  <div class="from-section">
+                    <div class="form-tr row">
+
+                      <div class="w100p fl-l">
+                        <div class="form-box row">
+                          <label class="fl-l">구매신청일자</label>
+                          <div class="fl-l calendar-input-box" id="Search-time">
+                            <div class="row">
+                              <div class="calendar-input-btn-box fl-l">
+                                <input type="text" id="datepicker1">
+                              </div>
+                              <span class="fl-l"> ~ </span>
+                              <div class="calendar-input-btn-box fl-l">
+                                <input type="text" id="datepicker2">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 달력 -->
+                      <link rel="stylesheet" href="../views/include/datepicker.css">
+                      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                      <script>
+                        $(function() {
+                          $("#datepicker1, #datepicker2").datepicker({
+                            dateFormat: 'yy.mm.dd',
+                            showOn: "both",
+                            buttonImage: "../views/images/calendar-5.png",
+                            buttonImageOnly: true,
+                            buttonText: "Select date"
+                          });
+                        });
+                      </script>
+                    </div>
+                    <!--form-tr-->
+                  </div>
+                  <!--from-section-->
+                  <div class="from-section mb-0">
+                    <div class="form-btn-box mb-0">
+                      <a class="btn-change" onclick="">
+                        <data-tag name="SYMBOL"></data-tag> 구매신청
+                      </a>
+                    </div>
+                  </div>
+                  <!--from-section-->
+                </div>
+                <!--conts-box-->
+                <div class="conts-box pb-0">
+                  <div class="from-section">
+                    <div class="form-title row">
+                      <h2 class="fl-l">
+                        <data-tag name="SYMBOL"></data-tag> 신청내역<span>입금관리 주소 : <data-tag id="compBank"></data-tag></span>
+                      </h2>
+                      <div class="fl-r mt-10">
+                        <a href="#" class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','PurchList')">엑셀 다운로드</a>
+                      </div>
+                    </div>
+                    <div class="table-box with-app-btc">
+                      <div class="table-over-box">
+                        <table border="0" id="excelTable">
+                          <thead>
+                            <tr>
+                              <th>번호</th>
+                              <th>신청일자</th>
+                              <th>아이디</th>
+                              <th class="tx-r">KRW신청금액</th>
+                              <th class="tx-r">수수료 1%</th>
+                              <th class="tx-r">KRW 수수료</th>
+                              <th class="tx-r">환산KRW</th>
+                              <th class="tx-r">출금WRD수량</th>
+                              <th>출금지갑주소</th>
+                              <th class="tx-r">실입금액</th>
+                              <th>입금자명</th>
+                              <th>상태</th>
+                              <th>관리하기</th>
+                            </tr>
+                          </thead>
+                          <tbody name="tableData">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="paging fl-r">
+                        <ul class="row" id="pageDiv">
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!--출금취소 팝업-->
+  <div class="popup-bg">
+    <!--출금완료 팝업-->
+    <div id="popup" class="purchase-application">
+
+      <div class="pop-title">
+        <h2 id="popTitle">WRD 구매신청 상세보기</h2>
+        <a class="close"><i class="sm sm-multiply"></i></a>
+      </div>
+
+      <div class="pop-conts">
+        <div class="pop-form-box row">
+          <p class="fl-l">출금지갑주소</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="REC_ADDRESS" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">WRD 출금수량</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="QTY" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">실입금 금액</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="RKRW" readonly>
+          </div>
+        </div>
+        <div class="pop-table">
+          <div class="table-over-box pop-trade-exchange-list">
+            <table border="0">
+              <thead>
+                <tr>
+                  <th>분류</th>
+                  <th>신청일시</th>
+                  <th class="tx-r">신청코인</th>
+                  <th class="tx-r">수수료</th>
+                  <th class="tx-r">실지급코인</th>
+                  <th>입금확인</th>
+                </tr>
+              </thead>
+              <tbody name="popData">
+                <tr>
+                  <td class="tx-red">
+                    <data-tag name="SYMBOL"></data-tag> 코인구매
+                  </td>
+                  <td>
+                    <data-tag id="C_IDATE"></data-tag>
+                  </td>
+                  <td class="tx-r">
+                    <data-tag id="RAMT"></data-tag>
+                    <data-tag name="SYMBOL"></data-tag>
+                  </td>
+                  <td class="tx-r">
+                    <data-tag id="RFEE"></data-tag>
+                    <data-tag name="SYMBOL"></data-tag>
+                  </td>
+                  <td class="tx-r">
+                    <data-tag name="QTY"></data-tag>
+                    <data-tag name="SYMBOL"></data-tag>
+                  </td>
+                  <td id="confrimBtn">
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        <div class="pop-form-box row">
+          <div class="checkbox-box fl-l">
+            <input type="checkbox" name="sms-confirm" id="sms-confirm" value="1" checked>
+            <label for="sms-confirm">SMS전송</label>
+          </div>
+        </div>
+
+        <div class="pop-btn-box">
+          <div class="row mrow">
+            <div class="w50p fl-l">
+              <a class="btn-pop">WRDPOINT 전환</a>
+            </div>
+            <div class="w50p fl-l">
+              <a class="btn-pop" onclick="sendCoin()">WRD 전송</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- <script>
+
+      $("#popup.cancel-withdrawal-cont a.close").click(function() {
+        $("#popup.cancel-withdrawal-cont").fadeOut(500, function() {
+          $(".popup-bg").fadeOut(200);
+        });
+      });
+      $("#popup.completion-withdrawal a.close").click(function() {
+        $("#popup.completion-withdrawal").fadeOut(500, function() {
+          $(".popup-bg").fadeOut(200);
+        });
+      });
+    </script> -->
+
+
+  </div>
+  <!--popup-bg-->
+
+
+
+
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var buyParam = {
+    D_UID: " ",
+    STAN_SNAME: "WRD",
+    SNAME: "KRW",
+    D_SDATE: " ",
+    D_EDATE: " ",
+    CUR_PAGING: "1",
+    PAGING_NO: "10"
+  }
+  var selectedUser=null;
+  var addrList = []
+  var SelectedCoin = "WRD"
+  var coinNames = {
+    "WRD": "우리들코인",
+    "ETH": "이더리움",
+    "BTC": "비트코인"
+  }
+  var ListDATA = []
+  $(document).ready(() => {
+    reqApiList({
+      URL: 'getBuyList',
+      PARAM: buyParam
+    }).then(data => {
+      $("tbody[name=tableData]").empty()
+      ListDATA = data.BUYLIST
+      var innerHtml = ""
+      for (var i = 0; i < ListDATA.length; i++) {
+        var using = (ListDATA[i].STATE == "W") ? "입금확인.." : "전송대기.."
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + ListDATA[i].ROWNUMBER + '</td>';
+        innerHtml += '<td>' + ListDATA[i].C_IDATE + '</td>';
+        innerHtml += '<td>' + ListDATA[i].C_UID + '</td>';
+        innerHtml += '<td>' + ListDATA[i].AMOUNT + '</td>';
+        innerHtml += '<td>' + ListDATA[i].FEE + '</td>';
+        innerHtml += '<td>' + ListDATA[i].KRW_FEE + '</td>';
+        innerHtml += '<td>' + ListDATA[i].C_RAMT + '</td>';
+        innerHtml += '<td>' + ListDATA[i].QTY + '</td>';
+        innerHtml += '<td>' + ListDATA[i].REC_ADDRESS + '</td>';
+        innerHtml += '<td>' + ListDATA[i].RKRW + '</td>';
+        innerHtml += '<td>' + ListDATA[i].UNAME + '</td>';
+        innerHtml += '<td>' + using + '</td>';
+        innerHtml += '<td><a class="btn-table-change" onclick="openPop(' + i + ')">상세보기</a></td>';
+        innerHtml += '</tr>';
+      }
+      $("tbody[name=tableData]").append(innerHtml)
+      $("#popup.purchase-application a.close").click(function() {
+        $("#popup.purchase-application").fadeOut(500, function() {
+          $(".popup-bg").fadeOut(200);
+        });
+      });
+      reqApiList({
+        URL: 'AgetCoinInfo'
+      }).then(data => {
+        addrList = data.COININFO
+        changeCoin('WRD')
+      })
+      reqApi({
+        URL: 'getCompBankInfo'
+      }).then(data => $("#compBank").text(data.COMPBANK['B_NAME'] + " " + data.COMPBANK['B_IDNO'] + "예금주(" + data.COMPBANK['B_OWNER'] + ")"))
+    })
+  })
+
+  function openPop(idx) {
+    $(".popup-bg").fadeIn(200, function() {
+      $("#popup.purchase-application").fadeIn(500);
+    });
+    selectedUser=idx
+    ListDATA[idx]['RKRW']=commonLib.comma(ListDATA[idx]['RKRW'])
+    commonLib.bindValue(ListDATA[idx])
+    commonLib.bindValueNameData(ListDATA[idx])
+    var innerHtml='';
+    if(ListDATA[idx]['KRW_STATUS']=='2'){
+      innerHtml+='<a class="btn-table-change" onclick="buyConfirm(0,'+idx+')">확인</a>';
+    }else{
+      innerHtml+='<a class="btn-table-change onclick="buyConfirm(1,'+idx+')" btn-red">확인취소</a>';
+    }
+    $("#confrimBtn").empty()
+    $("#confrimBtn").append(innerHtml)
+  }
+  function buyConfirm(ok,idx) {
+    reqApi({
+      URL: (ok==0)?'setBuyCheckOk':'setBuyCheckCancel',
+      PARAM: {
+        D_UID: ListDATA[idx]['C_UID'],
+        STAN_SNAME: SelectedCoin,
+        C_KEY: ListDATA[idx]['C_IDX']
+      }
+    }).then(data => {
+      if(data.BUYCHECK['RESULT']==0){
+        alert((ok==0)?"입금확인 완료 하였습니다.":"입금확인 취소 완료 하였습니다")
+        location.reload()
+      }else if(data.BUYCHECK['RESULT']==1){
+        alert("회사지갑 주소가 없습니다. 회사 지갑등록이후 확인 하여 주십시오")
+      }else if(data.BUYCHECK['RESULT']==2){
+        alert((ok==0)?"이미 입금 신청 한 건 입니다.문제가 있을 경우 확인 취소 하여 주십시오!":"이미 취소한  건 입니다")
+      }else if(data.BUYCHECK['RESULT']==9){
+        alert("예기치 않은 문제가 발생하였습니다. 시스템 관리자에게 문의하십시오")
+      }
+    })
+  }
+  function sendCoin() {
+    if(ListDATA[selectedUser]['KRW_STATUS']=='2'){
+      alert("입금 확인이후 전송해주세요")
+    }else{
+      if(confirm("구매 신청자에게"+SelectedCoin+"코인 전송 하시겠습니까")){
+        reqApi({
+          URL: 'sendCoin',
+          PARAM: {
+            D_UID: ListDATA[selectedUser]['C_UID'],
+            RECIVE_ADDR: ListDATA[selectedUser]['REC_ADDRESS'],
+            STAN_SNAME: SelectedCoin,
+            C_KEY: ListDATA[selectedUser]['C_IDX']
+          }
+        }).then(data => {
+          if(data.SENDCOIN['RESULT']==0){
+            alert("정상처리")
+            location.reload()
+          }else if(data.SENDCOIN['RESULT']==1){
+            alert("관리 지갑 갑주소가 없습니다")
+          }else if(data.SENDCOIN['RESULT']==2){
+            alert("입금 확인을 처리하지 않은 상황")
+          }
+        })
+      }
+    }
+
+  }
+
+  function changeCoin(val) {
+    SelectedCoin = val
+    var conName = coinNames[SelectedCoin]
+    $("#cointext1").attr("placeholder", conName + "코인 (" + val + ")`을 수신(받을)할 지갑주소");
+    commonLib.bindValueNameData({
+      SYMBOL: val,
+      COINNAME: conName
+    })
+    for (var i = 0; i < addrList.length; i++) {
+      if (addrList[i]['GUBUN'] == SelectedCoin) {
+        if (addrList[i]['OFFRATE_YN'] == 'N') {
+          reqApi({
+            URL: 'getRate',
+            PARAM: {
+              SNAME: val
+            }
+          }).then(data => {
+            $("#C_LAST_PRICE").val(commonLib.comma(data.COINRATE * 1))
+            coinRate = data.COINRATE * 1
+          })
+        } else {
+          $("#C_LAST_PRICE").val(addrList[i]['DB_AMT'])
+          coinRate = addrList[i]['DB_AMT'] * 1
+        }
+        $("#COINADDR").val(addrList[i]['AD_ADDRESS'])
+        reqApi({
+          URL: 'getBalance',
+          PARAM: {
+            SNAME: "ETH",
+            ADDR: addrList[i]['AD_ADDRESS']
+          }
+        }).then(data => $("#ETHVAL").val((data.COINPRICE)))
+        reqApi({
+          URL: 'getBalance',
+          PARAM: {
+            SNAME: val,
+            ADDR: addrList[i]['AD_ADDRESS']
+          }
+        }).then(data => $("#COINVAL").val((data.COINPRICE)))
+        return
+      }
+    }
+
+  }
+
+  function getList() {
+
+  }
+</script>

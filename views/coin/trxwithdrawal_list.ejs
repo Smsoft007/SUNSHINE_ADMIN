@@ -1,0 +1,503 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>TRX출금신청 리스트</h1>
+          <div class="row">
+            <p class="fl-l">TRX 출금승인 할 있습니다.</p>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 p-5 mb-20">
+                <div class="row">
+                  <div class="w50p fl-l mb-5">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">출금지갑 주소</label>
+                      <div class="select-input-box fl-l">
+                        <input type="text" class="input" id="main_addr" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w0p fl-l mb-5">
+                    <div class="form-box row">
+                      <label class="fl-l">메인지갑잔액</label>
+                      <div class="w50p fl-l mb-0 " id="Search-time">
+                        <div class="row">
+                            <input type="text" id="admin_qty" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="w50p fl-l mb-5">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value="1" selected>아이디</option>
+                          <option value="2">이름</option>
+                          <option value="3">전화번호</option>
+                          <option value="4">이메일</option>
+                        </select>
+                        <input type="text" class="input" id="selText" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w50p fl-l mb-5">
+                    <div class="form-box row">
+                      <label class="fl-l">출금신청일시</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1" />
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <link
+                    rel="stylesheet"
+                    href="../views/include/datepicker.css"
+                  />
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function () {
+                      $('#datepicker1, #datepicker2').datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: 'both',
+                        buttonImage: '../views/images/calendar-5.png',
+                        buttonImageOnly: true,
+                        buttonText: 'Select date',
+                      });
+                    });
+                  </script>
+                </div>
+              </div>
+              <!--search-box-->
+
+              <div class="from-section mb-0">
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onClick="getList()">회원검색 하기</a>
+                </div>
+              </div>
+              <!--from-section-->
+            </div>
+            <!--conts-box-->
+
+            <div class="conts-box pb-0">
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">
+                    출금신청자 리스트<span>검색 00명 / 총지급수량 00 TRX</span>
+                  </h2>
+                  <div class="fl-r">
+                    <a
+                      href="#"
+                      class="btn-excel-down fl-l"
+                      onclick="commonLib.fnExcelReport('excelTable','UserList')"
+                      >엑셀 다운로드</a
+                    >
+
+                     <select id="SECHER1_TITLE4" name="SECHER1_TITLE4">
+                      <option value="D_DATE">최근가입순</option>
+                      <option value="SECHER_TEXT">아이디 오름차순</option>
+                      <option value="SECHER_TEXT">아이디 내림차순</option>
+                    </select> 
+                  </div>
+                </div>
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0" id="excelTable">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>회원정보</th>
+                          <th>코인</th>
+                          <th>출금신청</th>
+                          <th>수수료</th>
+                          <th>출금시세</th>
+                           <th>총출금TRX</th>
+                          <th>실출금TRX</th>
+                          <th>출금지갑주소</th>
+                          <th>출금신청일시</th>
+                          <th>전화번호</th>
+                          <th>관리하기</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData"></tbody>
+                    </table>
+                    <!--/CONTENT LIST--->
+                  </div>
+
+                  <div class="row">
+                    <div class="paging fl-r">
+                      <ul class="row" name="paging">
+                        <!-- <li><a><i class="fa fa-angle-left"></i></a></li>
+                        <li><a class="active">1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li><a>4</a></li>
+                        <li><a>5</a></li>
+                        <li><a><i class="fa fa-angle-right"></i></a></li> -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--conts-box-->
+          </div>
+        </section>
+      </div>
+      <!--main-wrap-->
+    </div>
+    <!--row-->
+  </div>
+  <!--wrap--->
+
+  <!--삭제/몰수 팝업-->
+  <div class="popup-bg">
+    <!--삭제/몰수 팝업-->
+    <div id="popup" class="forfeit-cont">
+      <div class="pop-title">
+        <h2>전송 세부정보 </h2>
+        <a class="close"><i class="sm sm-multiply"></i></a>
+      </div>
+
+      <div class="pop-conts">
+        <div class="pop-form-box row">
+          <p class="fl-l">회원ID</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="MS_UID" readonly />
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">회원명</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_NAME_H" readonly />
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">회원연락처</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_HP" readonly />
+          </div>
+        </div>
+
+         <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">신청일시</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="MS_IDATE" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">출금주소</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="MS_RECIVEADDR" readonly>
+              </div>
+            </div>
+          </div>
+        </div> 
+         <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">출금액</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="MS_AMT2" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">출금시세</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="MS_RATE" readonly>
+              </div>
+            </div>
+          </div>
+        </div> 
+         <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">수수료</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="MS_FEE" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">총출금수량</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="MS_SQTY" readonly>
+              </div>
+            </div>
+          </div>
+        </div> 
+         <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">수수료수량</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="MS_FEEQTY" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">실출금수량</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="MS_QTY" readonly>
+                <input type="hidden" class="input" id="MS_KEY" >
+              </div>
+            </div>
+          </div>
+        </div> 
+        <div class="pop-btn-box">
+          <div class="row mrow">
+            <div class="w33p fl-l">
+              <a class="btn-pop close" onClick="Withdrawal_Application()">출금승인</a>
+            </div>
+            <!-- <div class="w33p fl-l">
+              <a class="btn-pop close">코인몰수</a>
+            </div> -->
+            <div class="w33p fl-l">
+              <a class="btn-pop close">닫기</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var totalPage = 0;
+  var sMemberId = '';
+  var data;
+
+  function init() {
+    function open_btc_cancel_reason_withdrawal(url) {
+      $('.popup-bg').fadeIn(200, function () {
+        $('#popup.forfeit-cont').fadeIn(500);
+        $('#btc-forfeit').attr('src', url);
+      });
+    }
+
+    function close_btc_cancel_reason_withdrawal(url) {
+      $('#popup.forfeit-cont').fadeOut(500, function () {
+        $('.popup-bg').fadeOut(200);
+      });
+    }
+    $('.btn-forfeit').click(function () {
+      $('.popup-bg').fadeIn(200, function () {
+        $('#popup.forfeit-cont').fadeIn(500);
+      });
+    });
+    $('#popup.forfeit-cont a.close').click(function () {
+      $('#popup.forfeit-cont').fadeOut(500, function () {
+        $('.popup-bg').fadeOut(200);
+      });
+    });
+  }
+
+
+  
+  $(document).ready(() => {
+    getList();
+    Balance();
+  });
+
+  function getList() {
+    $('tbody[name=tableData]').empty();
+    var param = {};
+    param['D_SDATE'] = $('#datepicker1').datepicker('getDate')
+      ? $('#datepicker1').datepicker('getDate').format('yyyy-MM-dd')
+      : ' ';
+    param['D_EDATE'] = $('#datepicker2').datepicker('getDate')
+      ? $('#datepicker2').datepicker('getDate').format('yyyy-MM-dd')
+      : ' ';
+    param['SECHER1_TITLE'] = $('#selType').val();
+    param['UN_ESECHER_TEXT'] =
+      $('#selText').val() == '' ? ' ' : $('#selText').val();
+    param['CNT'] = 'true';
+    param['GUBUN'] = 'TRX'; 
+    param['CUR_PAGING'] = currentPage + '';
+    param['PAGING_NO'] = '10';
+    reqApiList({
+      URL: 'AgetWithdList',
+      PARAM: param,
+    }).then((data) => {
+      if (data.CNT.ALL_CNT != 0) {
+        cnt = data.CNT.ALL_CNT;
+        totalPage = Math.floor(cnt / 10) + (cnt % 10 != 0 ? 1 : 0);
+        pageLevel = Math.floor(currentPage / (pageRange + 1));
+        nowPages =
+          totalPage - pageLevel * 5 > 5 ? 5 : totalPage - pageLevel * 5;
+      }
+      for (var i = 0; i < data.AWITHLIST.length; i++) {
+        var innerHtml = '';
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + data.AWITHLIST[i].ROW_NOMBER + '</td>';
+        innerHtml += '<td>' + data.AWITHLIST[i].USERID + '</td>';
+        innerHtml += '<td>' + data.AWITHLIST[i].RECIVETYPE + '</td>';
+        innerHtml += '<td>' + data.AWITHLIST[i].MS_AMT2 + '</td>';
+        innerHtml += '<td>' + data.AWITHLIST[i].MS_FEE + '</td>';
+        innerHtml += '<td>' + data.AWITHLIST[i].MS_RATE + '</td>';
+        innerHtml += '<td>' + data.AWITHLIST[i].MS_SQTY + '</td>';
+         innerHtml += '<td>' + data.AWITHLIST[i].MS_QTY + '</td>';
+         innerHtml += '<td>' + data.AWITHLIST[i].RECIVERADDR + '</td>'; 
+        innerHtml += '<td>' + data.AWITHLIST[i].MS_IDATE + '</td>';
+        innerHtml += '<td>' + data.AWITHLIST[i].MS_HP + '</td>';
+         
+ 
+
+        //innerHtml += '<td>' + data.MEMBERLIST[i].B_IDNO + '</td>';
+        //innerHtml += '<td>' + data.MEMBERLIST[i].B_OWNER + '</td>';
+
+        innerHtml +=
+          '<td><a class="btn-table-change btn-forfeit" onClick="getMeberInfo(\''+
+          data.AWITHLIST[i].MS_KEY +
+          '\')" class="btn-table-change">전송전보확인</a> ';
+
+        innerHtml +=
+          '<a class="btn-table-change btn-forfeit" onClick="getMeberCancel(\''+
+          data.AWITHLIST[i].MS_KEY +
+          ",'" +
+          data.AWITHLIST[i].MS_KEY +
+          '\')">취소/보류</a></td>';
+        innerHtml += '</tr>';
+        $('tbody[name=tableData]').append(innerHtml);
+      }
+      var innerHtml = '';
+      innerHtml +=
+        '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+      $('ul[name=paging]').empty();
+      for (var i = 1; i <= nowPages; i++) {
+        if (currentPage == i) {
+          innerHtml +=
+            '<li onclick="movePage(' +
+            i +
+            ')"> <a class="active">' +
+            (pageLevel * 5 + i) +
+            '</a> </li>';
+        } else {
+          innerHtml +=
+            '<li onclick="movePage(' +
+            i +
+            ')"> <a>' +
+            (pageLevel * 5 + i) +
+            '</a> </li>';
+        }
+      }
+      innerHtml +=
+        '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+      $('ul[name=paging]').append(innerHtml);
+      init();
+    });
+  }
+
+  async function getMeberInfo(idx) {
+    console.log(idx);
+    var r = await reqApi({
+      URL: 'getWithDetil',
+      PARAM: {
+        IDX : idx + '',
+      },
+    });
+    var member = r.DETAIL;
+    console.log(member);
+    commonLib.bindValue(member);
+  }
+  
+
+  async function Balance() {
+    var Param = {};
+    Param['ADDR'] = 'TAiffzFM3H8n82RQsKU7UTvFYG8fjyjqRu';
+    Param['SNAME'] = 'TRX';
+    var r = await reqApi({
+      URL: 'getBalance',
+      PARAM: Param,
+    });
+    $('#admin_qty').val(r.COINPRICE)
+    $('#main_addr').val('TAiffzFM3H8n82RQsKU7UTvFYG8fjyjqRu')
+    console.log();
+  }
+  async function Withdrawal_Application() {
+    var Param = {};
+    Param['MS_KEY'] = $('#MS_KEY').val();
+    Param['TAGET'] = $('#MS_RECIVEADDR').val();
+    Param['AMOUNT'] = $('#MS_QTY').val();
+    var r = await reqApi({
+      URL: 'admin_trxtransfor',
+      PARAM: Param,
+    });
+    alert('전송완료 처리 되었습니다');
+    location.reload();
+    
+    if (r.ADMINCOMFORM=== 0) {
+
+         alert('출금신청이 정상적으로 처리되었습니다.');
+          location.reload();
+     } else if  (r.ADMINCOMFORM=== 1) {   
+         alert('출금에 실퍠하였습니다.');
+
+    }
+    
+    }    //   case 1:
+    //     break;
+    //     alert('전송에 실패 하였습니다.');
+    //   case 2:
+    //     alert('탈퇴한 회원입니다');
+    //     break;
+    //   case 3:
+    //     alert('전송에 실패하였습니다.');
+    //     break;
+    //   case 4:
+    //     alert('보유코인이 존재합니다');
+    //     break;
+    //   case 5:
+    //     alert('매칭대기중인 코인이 존재합니다');
+    //     break;
+    // }
+    
+
+  function movePage(page) {
+    currentPage = pageLevel * 5 + page;
+    getList();
+  }
+
+  function btnPage(pos) {
+    if (pos == 'bef' && currentPage > 1) {
+      currentPage--;
+    } else if (pos == 'next' && currentPage < totalPage) {
+      currentPage++;
+    }
+    getList();
+  }
+  
+</script>

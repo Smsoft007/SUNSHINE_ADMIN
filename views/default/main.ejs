@@ -1,0 +1,313 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1><%=GUBUN%> 출금신청내역</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>코인출금신청관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li><%=GUBUN%> 출금신청내역</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- <section id="cont-section">
+          <div class="cont-whitebox">
+            <ul class="row main-teb-menu">
+              <li><a class="active" id="teb-menu1" href="withdrawal-application-btc.ejs"><%=GUBUN%>출금신청내역</a></li>
+              <li><a id="teb-menu2" href="withdrawal-application-complete-btc.ejs"><%=GUBUN%>출금완료내역</a></li>
+              <li><a id="teb-menu3" href="withdrawal-application-cancel-btc.ejs"><%=GUBUN%>출금취소내역</a></li>
+            </ul>
+            <div class="main-teb-cont">
+              <div class="teb-conts teb-cont1 p-0">
+                <div class="conts-box pb-0">
+                  <div class="search-box border-l0 border-r0 p-5 bg-grey mb-30">
+
+                    <div class="row ">
+                      <div class="w100p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">관리자 주소 </label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" id="RATE" readonly>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="w33p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l"><%=GUBUN%> 코인시세</label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" id="COINDATA" readonly>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w33p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">ETH 잔액</label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" readonly id="DB_AMT">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w33p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l"><%=GUBUN%> 잔액</label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" readonly id="DB_AMT1">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--search-box-->
+                  <div class="from-section">
+                    <div class="form-tr row">
+
+                      <div class="w100p fl-l">
+                        <div class="form-box row">
+                          <label class="fl-l">출금신청일자</label>
+                          <div class="fl-l calendar-input-box" id="Search-time">
+                            <div class="row">
+                              <div class="calendar-input-btn-box fl-l">
+                                <input type="text" id="datepicker1">
+                              </div>
+                              <span class="fl-l"> ~ </span>
+                              <div class="calendar-input-btn-box fl-l">
+                                <input type="text" id="datepicker2">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 달력 -->
+                      <link rel="stylesheet" href="../views/include/datepicker.css">
+                      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                      <script>
+                        $(function() {
+                          $("#datepicker1, #datepicker2").datepicker({
+                            dateFormat: 'yy.mm.dd',
+                            showOn: "both",
+                            buttonImage: "../views/images/calendar-5.png",
+                            buttonImageOnly: true,
+                            buttonText: "Select date"
+                          });
+                        });
+                      </script>
+                    </div>
+                    <!--form-tr-->
+                  </div>
+                  <!--from-section-->
+                  <div class="from-section mb-0">
+                    <div class="form-btn-box mb-0">
+                      <div class="row mrow">
+                        <div class="w50p fl-l">
+                          <a class="btn-change" onclick="openFile()">WRD 출금 신청 자료 가져오기</a>
+                          <input type="file" id="file" name="file" style="display:none" onchange="excelExport(event)" />
+                        </div>
+                        <div class="w50p fl-l">
+                          <a class="btn-change" onclick="setList()">확정하기</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--from-section-->
+                </div>
+                <!--conts-box-->
+                <div class="conts-box pb-0">
+                  <div class="from-section">
+                    <div class="form-title row">
+                      <h2 class="fl-l"><%=GUBUN%> 출금신청내역</h2>
+                      <div class="fl-r mt-10">
+                        <a href="#" class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','<%=GUBUN%>WithdrawalList')">엑셀 다운로드</a>
+                        <a href="#" class="btn-excel-down btn-red fl-l mr-10">일괄전송</a>
+                      </div>
+                    </div>
+                    <div class="table-box with-app-btc">
+                      <div class="table-over-box">
+                        <table border="0" id="excelTable">
+                          <thead>
+                            <tr>
+                              <th>번호</th>
+                              <th>날짜</th>
+                              <th>아이디</th>
+                              <th>수신자 주소</th>
+                              <th class="tx-r">KRW금액</th>
+                              <th class="tx-r">WRD수량</th>
+                              <th>관리하기</th>
+                            </tr>
+                          </thead>
+                          <tbody id="tableData">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="paging fl-r">
+                        <ul class="row" id="pageDiv">
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> 
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<script>
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var gubun = "ETH"
+  // var gubun = "<%=GUBUN%>"
+  var totalPage = 0;
+  var cnt = 0;
+  var selectedVal;file
+  var listData=[];
+  var totalAmt = 0
+  var LISTPARAM = {
+    SECHER1_TITLE: "1",
+    SECHER_TEXT: " ",
+    GUBUN: gubun,
+    SITE_CODE: "BTC",
+    CNT: "true",
+    D_SDATE: " ",
+    D_EDATE: " ",
+    CUR_PAGING: "1",
+    PAGING_NO: "10"
+  }
+
+  function openFile() {
+    $('#file').click();
+  }
+
+  function excelExport(event) {
+    var input = event.target;
+    var reader = new FileReader();
+    reader.onload = function() {
+      var fileData = reader.result;
+      var wb = XLSX.read(fileData, {
+        type: 'binary'
+      });
+      wb.SheetNames.forEach(function(sheetName) {
+        listData = XLSX.utils.sheet_to_row_object_array(wb.Sheets[sheetName]);
+        var Keys=Object.keys(listData[0])
+        if(JSON.stringify(["날자", "아이디", "수신자 주소", "출금금액"])==JSON.stringify(Keys)){
+          getList()
+        }else{
+          alert("잘못된 데이터 형식입니다. 주어진 데이터 형식에 맞춰서 진행해주세요")
+        }
+      })
+    };
+    reader.readAsBinaryString(input.files[0]);
+  }
+  $(document).ready(() => {
+    reqApiList({
+      URL: 'AgetCoinInfo'
+    }).then(data => {
+      selectedVal = data.COININFO
+      for (var i = 0; i < selectedVal.length; i++) {
+        if (selectedVal[i].GUBUN == gubun) {
+          selectedVal = selectedVal[i]
+          break
+        }
+      }
+      commonLib.bindValue(selectedVal)
+    })
+  })
+
+
+  function getList() {
+    $("#tableData").empty()
+    var innerHTML = '';
+    for (var i = 0; i < listData.length; i++) {
+      totalAmt = listData[i].ALLAMT
+      innerHTML += '<tr>';
+      innerHTML += '<td>' + (i + 1) + '</td>';
+      innerHTML += '<td>' + listData[i]['날자'] + '</td>';
+      innerHTML += '<td>' + listData[i]['아이디'] + '</td>';
+      innerHTML += '<td>' + listData[i]['수신자 주소'] + '</td>';
+      innerHTML += '<td class="tx-r">' + listData[i]['출금금액'] + '</td>';
+      innerHTML += '<td class="tx-r">' + listData[i]['출금금액']/10000 + '</td>';
+      innerHTML += '<td>';
+      innerHTML += '<a class="btn-table-change btn-cancel-withdrawal" onclick="removeData(' + i + ')")">삭제하기</a>';
+      innerHTML += '</td>';
+      innerHTML += '</tr>';
+    }
+    $("#tableData").append(innerHTML)
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function removeData(index) {
+    if (index > -1) listData.splice(index, 1)
+    getList()
+  }
+
+  function setList() {
+    if (listData.length != 0) {
+      var PARAM = [];
+
+      for (var i = 0; i < listData.length; i++) {
+
+        var PARAMOBJ={}
+        PARAMOBJ['B_IDX']=(i+1)
+        PARAMOBJ['B_UID']=listData[i]['아이디']
+        PARAMOBJ['B_GUBUN']='WRD'
+        PARAMOBJ['B_SWEEK']=listData[i]['날자']
+        PARAMOBJ['B_RECADDR']=listData[i]['수신자 주소']
+        PARAMOBJ['B_RATE']="10000"
+        PARAMOBJ['B_AMOUNT']=listData[i]['출금금액']
+        PARAMOBJ['B_QTY']=(listData[i]['출금금액']/10000)+""
+        PARAMOBJ['B_AUID']='admin'
+        PARAMOBJ['B_ANAME']='admin'
+        if(commonLib.objValidate(PARAMOBJ)){
+          alert("올바르지 못한 데이터 발견 위치 : "+(i+1)+"번째 데이터")
+          return
+        }
+        PARAM.push(PARAMOBJ)
+      }
+      reqApi({
+        URL: 'setCoinData',
+        PARAM: {
+          UN_EDATAS: JSON.stringify(PARAM)
+        }
+      }).then(data => {
+        alert("등록완료")
+      })
+    }
+
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+      getList()
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+      getList()
+    }
+  }
+</script>

@@ -1,0 +1,325 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+          <h1>WRD 전송내역</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>구매신청관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>WRD 전송내역</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <ul class="row main-teb-menu">
+              <li><a id="teb-menu1" onclick="changeCoin('WRD')">WRD 전송내역</a></li>
+              <li><a id="teb-menu2" onclick="changeCoin('BTC')">BTC 전송내역</a></li>
+              <li><a id="teb-menu3" onclick="changeCoin('ETH')">ETH 전송내역</a></li>
+            </ul>
+            <div class="main-teb-cont">
+              <div class="teb-conts teb-cont1 p-0">
+                <div class="conts-box pb-0">
+                  <div class="search-box border-l0 border-r0 p-5 bg-grey mb-30">
+                    <div class="row ">
+                      <div class="w100p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">관리자 주소 </label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" id="COINADDR" readonly>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="w33p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">
+                            <data-tag name="SYMBOL"></data-tag> 코인시세
+                          </label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" id="C_LAST_PRICE" readonly>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w33p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">ETH 잔액</label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" readonly id="ETHVAL">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w33p fl-l m-0">
+                        <div class="search-form-box row pl-5 pr-5">
+                          <label class="fl-l">
+                            <data-tag name="SYMBOL"></data-tag> 잔액
+                          </label>
+                          <div class="input-box fl-l">
+                            <input type="text" class="input" readonly id="COINVAL">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--search-box-->
+                  <div class="search-box border-l0 border-r0 p-5">
+                    <div class="row">
+                      <div class="w50p fl-l m-0">
+                        <div class="search-form-box row">
+                          <label class="fl-l">검색어</label>
+                          <div class="select-input-box fl-l">
+                            <select id="selType">
+                              <option value=" ">전체</option>
+                              <option value="1">아이디</option>
+                              <option value="2">이름</option>
+                              <option value="3">전화번호</option>
+                              <option value="4">이메일</option>
+                            </select>
+                            <input type="text" class="input" id="selText">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w50p fl-l">
+                        <div class="search-form-box row">
+                          <label class="fl-l">처리구분</label>
+                          <div class="fl-l select-box">
+                            <select onchange="changeCoin()" id="selectCoin">
+                              <option value="BTC">BTC</option>
+                              <option value="ETH">ETH</option>
+                              <option value="WRD">WRD</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <!--search-box-->
+                  <div class="from-section">
+                    <div class="form-tr row">
+
+                      <div class="w100p fl-l">
+                        <div class="form-box row">
+                          <label class="fl-l">입금일자</label>
+                          <div class="fl-l calendar-input-box" id="Search-time">
+                            <div class="row">
+                              <div class="calendar-input-btn-box fl-l">
+                                <input type="text" id="datepicker1">
+                              </div>
+                              <span class="fl-l"> ~ </span>
+                              <div class="calendar-input-btn-box fl-l">
+                                <input type="text" id="datepicker2">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 달력 -->
+                      <link rel="stylesheet" href="../views/include/datepicker.css">
+                      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                      <script>
+                        $(function() {
+                          $("#datepicker1, #datepicker2").datepicker({
+                            dateFormat: 'yy.mm.dd',
+                            showOn: "both",
+                            buttonImage: "../views/images/calendar-5.png",
+                            buttonImageOnly: true,
+                            buttonText: "Select date"
+                          });
+                        });
+                      </script>
+                    </div>
+                    <!--form-tr-->
+                  </div>
+                  <!--from-section-->
+                  <div class="from-section mb-0">
+                    <div class="form-btn-box mb-0">
+                      <a class="btn-change" onclick="getList()">회원검색 하기</a>
+                    </div>
+                  </div>
+                  <!--from-section-->
+                </div>
+                <!--conts-box-->
+                <div class="conts-box pb-0">
+                  <div class="from-section">
+                    <div class="form-title row">
+                      <h2 class="fl-l">
+                        <data-tag name="SYMBOL"></data-tag> 신청내역<span>입금관리 주소 : <data-tag id="compBank"></data-tag></span>
+                      </h2>
+                      <div class="fl-r mt-10">
+                        <a href="#" class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','PurchList')">엑셀 다운로드</a>
+                      </div>
+                    </div>
+                    <div class="table-box with-app-btc">
+                      <div class="table-over-box">
+                        <table border="0" id="excelTable">
+                          <thead>
+                            <tr>
+                              <th>번호</th>
+                              <th>신청일자</th>
+                              <th>신청사이트</th>
+                              <th>코인명</th>
+                              <th>구매자명</th>
+                              <th>발신주소</th>
+                              <th class="tx-r">입금수량</th>
+                              <th class="tx-r">시세</th>
+                              <th class="tx-r">입금금액</th>
+                              <th class="tx-r">수수료</th>
+                              <th>입금여부</th>
+                            </tr>
+                          </thead>
+                          <tbody name="tableData">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="paging fl-r">
+                        <ul class="row" id="pageDiv">
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <script src="../views/include/js/bootstrap.min.js"></script>
+  <script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+  <script src="../views/include/js/waves.js"></script>
+  <script>
+    var buyParam = {
+      SECHER1_TITLE: " ",
+      SECHER_TEXT: " ",
+      GUBUN: "WRD",
+      COIN_TYPE: " ",
+      SITE_CODE: "01",
+      D_SDATE: " ",
+      D_EDATE: " ",
+      CUR_PAGING: "1",
+      PAGING_NO: "10"
+    }
+    var selected;
+    var addrList = []
+    var SelectedCoin = "WRD"
+    var coinNames = {
+      "WRD": "우리들코인",
+      "ETH": "이더리움",
+      "BTC": "비트코인"
+    }
+    var ListDATA = []
+    $(document).ready(() => {
+      reqApiList({
+        URL: 'AgetCoinInfo'
+      }).then(data => {
+        addrList = data.COININFO
+        changeCoin("WRD")
+      })
+    })
+
+    function getList() {
+      buyParam['GUBUN'] = SelectedCoin
+      buyParam['SECHER1_TITLE'] = $("#selType").val()
+      buyParam['UN_ESECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+      reqApi({
+        URL: 'getCoinWithTop',
+        PARAM: buyParam
+      }).then(data => commonLib.bindValueNameData(data.COINDEPTOP))
+      reqApiList({
+        URL: 'getCoinWithList',
+        PARAM: buyParam
+      }).then(data => {
+        console.log(data);
+        $("tbody[name=tableData]").empty()
+        ListDATA = data.COINDEPLIST
+        console.log(ListDATA);
+        var innerHtml = ""
+        for (var i = 0; i < ListDATA.length; i++) {
+          var using = (ListDATA[i].BANK_YN == "N") ? ["입금처리중", "tx-blue"] : ["입금완료", ""]
+          innerHtml += '<tr>';
+          innerHtml += '<td>'+ListDATA[i].ROWNUMBER+'</td>';
+          innerHtml += '<td>'+ListDATA[i].MS_IDATE+'</td>';
+          innerHtml += '<td>'+ListDATA[i].APP_SITE+'</td>';
+          innerHtml += '<td>'+ListDATA[i].RECIVETYPE+'</td>';
+          innerHtml += '<td>'+ListDATA[i].USERID+'</td>';
+          innerHtml += '<td>'+ListDATA[i].MS_SENDADDR+'</td>';
+          innerHtml += '<td class="tx-r">'+ListDATA[i].MS_QTY+'</td>';
+          innerHtml += '<td class="tx-r">'+ListDATA[i].MS_RATE+'</td>';
+          innerHtml += '<td class="tx-r">'+ListDATA[i].MS_AMOUNT+'</td>';
+          innerHtml += '<td class="tx-r">'+ListDATA[i].MS_FEE+'</td>';
+          innerHtml += '<td class="' + using[1] + '">' + using[0] + '</td>';
+          innerHtml += '</tr>';
+        }
+        $("tbody[name=tableData]").append(innerHtml)
+        $("#popup.purchase-application a.close").click(function() {
+          $("#p`opup.purchase-application").fadeOut(500, function() {
+            $(".popup-bg").fadeOut(200);
+          });
+        });
+      })
+    }
+
+    function changeCoin(val) {
+      SelectedCoin = val
+      var conName = coinNames[SelectedCoin]
+      buyParam['SNAME'] = val
+      $("#cointext1").attr("placeholder", conName + "코인 (" + val + ")`을 수신(받을)할 지갑주소");
+      commonLib.bindValueNameData({
+        SYMBOL: val,
+        COINNAME: conName
+      })
+      getList()
+      for (var i = 0; i < addrList.length; i++) {
+        if (addrList[i]['GUBUN'] == SelectedCoin) {
+          if (addrList[i]['OFFRATE_YN'] == 'N') {
+            reqApi({
+              URL: 'getRate',
+              PARAM: {
+                SNAME: val
+              }
+            }).then(data => {
+              $("#C_LAST_PRICE").val(commonLib.comma(data.COINRATE * 1))
+              coinRate = data.COINRATE * 1
+            })
+          } else {
+            $("#C_LAST_PRICE").val(addrList[i]['DB_AMT'])
+            coinRate = addrList[i]['DB_AMT'] * 1
+          }
+          $("#COINADDR").val(addrList[i]['AD_ADDRESS'])
+          reqApi({
+            URL: 'getBalance',
+            PARAM: {
+              SNAME: "ETH",
+              ADDR: addrList[i]['AD_ADDRESS']
+            }
+          }).then(data => $("#ETHVAL").val((data.COINPRICE)))
+          reqApi({
+            URL: 'getBalance',
+            PARAM: {
+              SNAME: val,
+              ADDR: addrList[i]['AD_ADDRESS']
+            }
+          }).then(data => $("#COINVAL").val((data.COINPRICE)))
+          return
+        }
+      }
+    }
+  </script>

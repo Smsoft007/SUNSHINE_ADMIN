@@ -1,0 +1,581 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>무통장입금내역</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>판매신청관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>무통장입금내역</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+
+            <div class="conts-box pb-0">
+
+              <div class="search-box border-l0 border-r0 p-5">
+                <div class="row">
+                  <div class="w50p fl-l m-0">
+                    <div class="search-form-box row">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value=" ">전체</option>
+                          <option value="1">아이디</option>
+                          <option value="2">이름</option>
+                          <option value="3">전화번호</option>
+                          <option value="4">이메일</option>
+                        </select>
+                        <input type="text" class="input" id="selText">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w25p fl-l">
+                    <div class="search-form-box row">
+                      <label class="fl-l">코인명</label>
+                      <div class="fl-l select-box">
+                        <select onchange="changeCoin()" id="selectCoin">
+                          <option value="BTC">BTC</option>
+                          <option value="ETH">ETH</option>
+                          <option value="WRD">WRD</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w25p fl-l">
+                    <div class="search-form-box row">
+                      <label class="fl-l">처리구분</label>
+                      <div class="fl-l select-box">
+                        <select id="coin_type">
+                          <option value="">전체</option>
+                          <option value="1">이체처리</option>
+                          <option value="2">미처리</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- <div class="w50p fl-l">
+                    <div class="search-form-box row">
+                      <label class="fl-l">신청사이트</label>
+                      <div class="fl-l select-box">
+                        <select>
+                          <option>Exchange Korea</option>
+                          <option>Exchange English</option>
+                          <option>Exchange Chinese</option>
+                          <option>Exchange Japanese</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div> -->
+
+                </div>
+              </div>
+              <!--search-box-->
+
+              <div class="from-section">
+
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">입금신청일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time1">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <!-- 달력 -->
+                  <link rel="stylesheet" href="../views/include/datepicker.css">
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function() {
+                      $("#datepicker1, #datepicker2").datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: "both",
+                        buttonImage: "../views/images/calendar-5.png",
+                        buttonImageOnly: true,
+                        buttonText: "Select date"
+                      });
+                    });
+                  </script>
+
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">입금완료일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time1">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker3">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker4">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <!-- 달력 -->
+                  <link rel="stylesheet" href="../views/include/datepicker.css">
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function() {
+                      $("#datepicker3, #datepicker4").datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: "both",
+                        buttonImage: "../views/images/calendar-5.png",
+                        buttonImageOnly: true,
+                        buttonText: "Select date"
+                      });
+                    });
+                  </script>
+
+                </div>
+                <!--form-tr-->
+
+              </div>
+              <!--from-section-->
+
+              <div class="from-section mb-0">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onclick="getList()">회원검색 하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div>
+            <!--conts-box-->
+
+
+            <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">무통장입금내역</h2>
+                  <h2 class="fl-l">신청내역<span>전체입금<data-tag name="C_SNAME"></data-tag>:<data-tag name="ALL_QTY"></data-tag> 미처리 <data-tag name="C_SNAME"></data-tag> 코인 <data-tag name="CUR_QTY"></data-tag></span></h2>
+                  <div class="fl-r mt-10">
+                    <a href="#" class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','SalesList')">엑셀 다운로드</a>
+                  </div>
+                </div>
+
+                <div class="table-box with-app-btc">
+                  <div class="table-over-box">
+                    <table border="0" id="excelTable">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>아이디</th>
+                          <th>신청일시</th>
+                          <th>접수번호</th>
+                          <th>판매코인</th>
+                          <th class="tx-r">판매금액</th>
+                          <th class="tx-r">판매수수료</th>
+                          <th class="tx-r">전송수수료</th>
+                          <th class="tx-r">실송금액</th>
+                          <th>은행코드</th>
+                          <th>은행명</th>
+                          <th>계좌번호</th>
+                          <th>예금주</th>
+                          <th>입금상태</th>
+                          <th>상세보기</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="paging fl-r">
+                    <ul class="row">
+                      <li><a><i class="fa fa-angle-left"></i></a></li>
+                      <li><a class="active">1</a></li>
+                      <li><a>2</a></li>
+                      <li><a>3</a></li>
+                      <li><a>4</a></li>
+                      <li><a>5</a></li>
+                      <li><a><i class="fa fa-angle-right"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!--conts-box-->
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup-bg">
+    <div id="popup" class="purchase-application">
+
+      <div class="pop-title">
+        <h2 id="popTitle">
+          <data-tag name="SYMBOL"></data-tag> 판매신청 상세보기
+        </h2>
+        <a class="close"><i class="sm sm-multiply"></i></a>
+      </div>
+
+      <div class="pop-conts">
+        <div class="pop-form-box row">
+          <p class="fl-l">
+            <data-tag name="SYMBOL"></data-tag> 발신주소
+          </p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" name="SEND_ADDRESS" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">
+            <data-tag name="SYMBOL"></data-tag>
+            <data-tag name="SYMBOL"></data-tag> 입금수량
+          </p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" name="MS_QTY" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">서버전송수수료</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" name="MS_REAL_FEE" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">
+            <data-tag name="SYMBOL"></data-tag> TXID
+          </p>
+          <div class="pop-input-box fl-l">
+            <a name="MS_TXID" target="_blank"></a>
+            <!-- <input type="text" class="input" name="MS_TXID" readonly onclick="gotoETHScan(this)"> -->
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">은행명</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" name="B_NAME" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">계좌번호</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" name="B_IDNO" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">예금주 </p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" name="B_IDNO" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">연락처</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" name="D_HP" readonly>
+          </div>
+        </div>
+
+        <div class="pop-table">
+
+          <div class="table-over-box pop-trade-exchange-list">
+            <table border="0">
+              <thead>
+                <tr>
+                  <th>분류</th>
+                  <th>신청일시</th>
+                  <th class="tx-r">환산금액</th>
+                  <th class="tx-r">수수료</th>
+                  <th class="tx-r">실지급액</th>
+                  <!-- <th>입금확인</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tx-red">
+                    <data-tag name="SYMBOL"></data-tag> 코인판매
+                  </td>
+                  <td>
+                    <data-tag name="MS_IDATE"></data-tag>
+                  </td>
+                  <td class="tx-r">
+                    <data-tag name="C_AMT"></data-tag>
+                  </td>
+                  <td class="tx-r">
+                    <data-tag name="FEES_AMT"></data-tag>
+                  </td>
+                  <td class="tx-r">
+                    <data-tag name="R_KRWAMT"></data-tag>
+                  </td>
+                  <!-- <td>
+                    <a href="" class="btn-table-change">확인</a>
+                    <a href="" class="btn-table-change btn-red">확인취소</a>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        <div class="pop-form-box row">
+          <div class="checkbox-box fl-l">
+            <input type="checkbox" name="sms-confirm" id="sms-confirm" value="1" checked>
+            <label for="sms-confirm">SMS전송</label>
+          </div>
+        </div>
+
+        <div class="pop-btn-box">
+          <a class="btn-pop close">
+            <a class="btn-pop close" onclick="sellOk()">
+              <data-tag name="SYMBOL"></data-tag> 전송
+            </a>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var buyParam = {
+    SECHER1_TITLE: " ",
+    SECHER_TEXT: " ",
+    GUBUN: "WRD",
+    COIN_TYPE: " ",
+    SITE_CODE: "01",
+    D_SDATE: " ",
+    D_EDATE: " ",
+    CUR_PAGING: "1",
+    PAGING_NO: "10"
+  }
+  var selected;
+  var addrList = []
+  var SelectedCoin = "WRD"
+  var coinNames = {
+    "WRD": "우리들코인",
+    "ETH": "이더리움",
+    "BTC": "비트코인"
+  }
+  var ListDATA = []
+  $(document).ready(() => {
+    reqApiList({
+      URL: 'AgetCoinInfo'
+    }).then(data => {
+      addrList = data.COININFO
+      changeCoin()
+    })
+  })
+
+  function getList() {
+    buyParam['GUBUN'] = SelectedCoin
+    buyParam['SECHER1_TITLE'] = $("#selType").val()
+    buyParam['UN_ESECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+    buyParam['COIN_TYPE'] = ($("#coin_type").val() == "") ? " " : $("#coin_type").val()
+    reqApi({
+      URL: 'getKrwDepTop',
+      PARAM: buyParam
+    }).then(data => commonLib.bindValueNameData(data.COINDEPTOP))
+    reqApiList({
+      URL: 'getKrwDepList',
+      PARAM: buyParam
+    }).then(data => {
+      $("tbody[name=tableData]").empty()
+      ListDATA = data.COINDEPLIST
+      console.log(ListDATA);
+      var innerHtml = ""
+      for (var i = 0; i < ListDATA.length; i++) {
+        var using = (ListDATA[i].BANK_YN == "Y") ? "입금" : "미입금"
+        innerHtml += '<tr>';
+        innerHtml += '<td>2</td>';
+        innerHtml += '<td>01012345678</td>';
+        innerHtml += '<td>2020-09-03 00:00:00,000</td>';
+        innerHtml += '<td>20200902-7113</td>';
+        innerHtml += '<td>ETH</td>';
+        innerHtml += '<td class="tx-r">1000</td>';
+        innerHtml += '<td class="tx-r">1000</td>';
+        innerHtml += '<td class="tx-r">1000</td>';
+        innerHtml += '<td class="tx-r">1000</td>';
+        innerHtml += '<td>123</td>';
+        innerHtml += '<td>하나은행</td>';
+        innerHtml += '<td>12345-12-123456</td>';
+        innerHtml += '<td>홍길동</td>';
+        innerHtml += '<td><a class="btn-table-change btn-blue" onclick="checkOk(' + i + ')">입금완료</a></td>';
+        innerHtml += '<td><a class="btn-table-change" onclick="openPop(' + i + ')">상세보기</a></td>';
+        innerHtml += '</tr>';
+      }
+      $("tbody[name=tableData]").append(innerHtml)
+      $("#popup.purchase-application a.close").click(function() {
+        $("#popup.purchase-application").fadeOut(500, function() {
+          $(".popup-bg").fadeOut(200);
+        });
+      });
+    })
+  }
+
+  function sellOk() {
+    reqApi({
+      URL: 'sellOk',
+      PARAM: {
+        SNAME: SelectedCoin,
+        STAN_SNAME: "KRW",
+        C_IDX: ListDATA[selected].C_SELL_KEY + ""
+      }
+    }).then(data => {
+      if (data.SELL.RESULT == 0) {
+        alert("정상 처리")
+        location.reload()
+      } else if (data.SELL.RESULT == 1) {
+        alert("관리자에게 문의하십시오!")
+      } else if (data.SELL.RESULT == 2) {
+        alert("관리자에게 문의하십시오!")
+      } else if (data.SELL.RESULT == 3) {
+        alert("이미입금처리한건입니다")
+      } else if (data.SELL.RESULT == 4) {
+        alert("이미입금처리한건입니다")
+      } else if (data.SELL.RESULT == 5) {
+        alert("이미입금처리한건입니다")
+      }
+    })
+  }
+
+  function checkOk(idx) {
+    var confirmText = `판매금액 무통장 입금 후 입금처리 하셔야 합니다.
+    판매대금 을 입금하셨습니까?`
+    if (confirm(confirmText)) {
+      selected = idx
+      reqApi({
+        URL: 'selKrwWithOk',
+        PARAM: {
+          SNAME: SelectedCoin,
+          STAN_SNAME: "KRW",
+          C_IDX: ListDATA[selected].C_SELL_KEY + ""
+        }
+      }).then(data => {
+        if (data.KRWOK.RESULT == 0) {
+          alert("정상 처리")
+          location.reload()
+        } else if (data.KRWOK.RESULT == 1) {
+          alert("코인입금 확인 이후 입금확인 하삽시오!")
+        } else if (data.KRWOK.RESULT == 2) {
+          alert("코인입금 확인 이후 입금확인 하삽시오!")
+        } else if (data.KRWOK.RESULT == 3) {
+          alert("코인입금 확인 이후 입금확인 하삽시오!")
+        } else if (data.KRWOK.RESULT == 4) {
+          alert("코인입금 확인 이후 입금확인 하삽시오!")
+        } else if (data.KRWOK.RESULT == 5) {
+          alert("이미 이체확인 하였습니다")
+        }
+      })
+    }
+  }
+
+  function changeCoin() {
+    var val = $("#selectCoin").val()
+    SelectedCoin = val
+    var conName = coinNames[SelectedCoin]
+    buyParam['SNAME'] = val
+    $("#cointext1").attr("placeholder", conName + "코인 (" + val + ")`을 수신(받을)할 지갑주소");
+    commonLib.bindValueNameData({
+      SYMBOL: val,
+      COINNAME: conName
+    })
+    getList()
+    for (var i = 0; i < addrList.length; i++) {
+      if (addrList[i]['GUBUN'] == SelectedCoin) {
+        if (addrList[i]['OFFRATE_YN'] == 'N') {
+          reqApi({
+            URL: 'getRate',
+            PARAM: {
+              SNAME: val
+            }
+          }).then(data => {
+            $("#C_LAST_PRICE").val(commonLib.comma(data.COINRATE * 1))
+            coinRate = data.COINRATE * 1
+          })
+        } else {
+          $("#C_LAST_PRICE").val(addrList[i]['DB_AMT'])
+          coinRate = addrList[i]['DB_AMT'] * 1
+        }
+        $("#COINADDR").val(addrList[i]['AD_ADDRESS'])
+        reqApi({
+          URL: 'getBalance',
+          PARAM: {
+            SNAME: "ETH",
+            ADDR: addrList[i]['AD_ADDRESS']
+          }
+        }).then(data => $("#ETHVAL").val((data.COINPRICE)))
+        reqApi({
+          URL: 'getBalance',
+          PARAM: {
+            SNAME: val,
+            ADDR: addrList[i]['AD_ADDRESS']
+          }
+        }).then(data => $("#COINVAL").val((data.COINPRICE)))
+        return
+      }
+    }
+  }
+
+  function openPop(idx) {
+    $(".popup-bg").fadeIn(200, function() {
+      $("#popup.purchase-application").fadeIn(500);
+    });
+    var grpl = $("data-tag[name=SYMBOL]").length;
+    for (var i = 0; i < grpl; i++) {
+      $("data-tag[name=SYMBOL]").eq(i).text(SelectedCoin)
+    }
+    selected = idx
+    reqApi({
+      URL: 'getSellDtail',
+      PARAM: {
+        SNAME: SelectedCoin,
+        STAN_SNAME: "KRW",
+        C_IDX: ListDATA[idx].C_SELL_KEY + ""
+      }
+    }).then(data => {
+      console.log(data.SELL);
+      data.SELL['MS_REAL_FEE'] = data.SELL['MS_REAL_FEE'].toFixed(8)
+      $("a[name=MS_TXID]").attr("href", "https://etherscan.io/tx/" + data.SELL['MS_TXID'])
+      commonLib.bindValueNameData(data.SELL)
+    })
+
+  }
+</script>

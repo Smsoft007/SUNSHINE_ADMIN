@@ -1,0 +1,357 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>기축통화 환율 설정</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 국가별 환율 설정 등록 변경 하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>기본 관리 정책</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>TEC기축통화 환율 리스트 </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-white-box">
+            <div class="counts-box pb-0">
+              <!-- <div class="search-box border-l0 border-r0 p-5"> -->
+                <!-- <div class="row"> -->
+                  <!-- <div class="w50p fl-l m-0"> -->
+                    <!-- <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value="1">관리자 </option>
+                          <option value="2">판매자</option>
+                          <option value="3">구매자</option>
+                        </select>
+                      </div>
+                    </div> -->
+                  <!-- </div> -->
+
+                <!-- </div> -->
+              <!-- </div> -->
+              <!--search-box-->
+
+              <div class="from-section">
+
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">사용여부</label>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining1" value="A" checked>
+                        <label for="joining1">전체</label>
+                      </div>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining2" value="Y">
+                        <label for="joining2">사용</label>
+                      </div>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining3" value="N">
+                        <label for="joining3">미사용</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+              </div>
+              <div class="from-section">
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">TEC환율</label>
+                      <div class="fl-l select-box">
+                        <select id="GUBUN">
+                          <option value="A" selected>전체</option>
+                          <option value="10">KRW</option>
+                          <option value="20">USD</option>
+                          <option value="30">JPY</option>
+                          <option value="40">CNY</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">등록일자 조회</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <script>
+                  $(function() {
+                    $("#datepicker1, #datepicker2").datepicker({
+                      dateFormat: 'yy.mm.dd',
+                      showOn: "both",
+                      buttonImage: "../views/images/calendar-5.png",
+                      buttonImageOnly: true,
+                      buttonText: "Select date"
+                    });
+                  });
+                </script>
+              </div>
+              <div class="from-section mb-0">
+              </div>
+              <!--from-section-->
+
+              <div class="from-section mb-0">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onclick="getList()">검색 하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div>
+            <!--conts-box-->
+
+
+            <div class="counts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">국가 환율 리스트   <span>검색  / 전체 </span></h2>
+                  <div class="fl-r">
+                      <a href="/default/stand-setrate-set" class="fl-l btn-Add-set">추가하기</a>
+                   <!-- <a href="#" class="btn-excel-down fl-l">엑셀 다운로드</a> -->
+                    <!-- <select>
+                      <option>수수료</option>
+                      <option>수수료</option>
+                      <option>구매</option>
+                      <option>판매</option>
+                    </select> -->
+                  </div>
+                </div>
+
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>STAN화폐</th>
+                          <th>화폐</th>
+                          <th>국가명</th>
+                          <th>사용유무</th>
+                          <th>설정금액</th>
+                          <th>시작일</th>
+                          <th>종료일</th>
+                          <th>등록자</th>
+                          <th>등록일시</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="paging fl-r">
+                    <ul class="row" name="tableData">
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!--conts-box-->
+          </div>
+        </section>
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  let nowPages = 1;
+  let pageRange = 5;
+  let currentPage = 1;
+  let pageLevel = 0;
+  let totalPage = 0;
+  let sMemberId = "";
+  let data;
+  let ListDATA = [];
+  $(document).ready(() => {
+    getList()
+  })
+
+
+  function getList() {
+    $("tbody[name=tableData]").empty()
+    var param = {}
+    //  param['SECHER1_TITLE'] = ($("#selType").val() == "") ? " " : $("#selType").val()
+    // param['UN_ESECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+    param['SECHER1_TITLE'] = " "
+    param['UN_ESECHER_TEXT'] = " "
+    param['B_CUR_YN'] = $(':radio[name="joining"]:checked').val();
+    param['SITE_CODE'] = "01";
+    param['CUR_PAGING'] = currentPage + ""
+    param['PAGING_NO'] = "30"
+    reqApiList({
+      URL: 'getCURRENCYBook',
+      PARAM: param
+    }).then((data) => {
+      ListDATA = data.CURRENCYBOOK
+      console.log(JSON.stringify(ListDATA));
+      //  if (data.ALL_CNT != 0) {
+      //    cnt = data.CNT.ALL_CNT
+      //    totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+      //    pageLevel = Math.floor(currentPage / (pageRange + 1))
+      //    nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+      //  }
+      var innerHtml = ""
+      for (var i = 0; i < ListDATA.length; i++) {
+        // var using = (ListDATA[i]idx == "1") ? "기축통화" : "일반통화"
+        console.log(ListDATA[i].C_STATUS);
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + ListDATA[i].ROW_NOMBER + '</td>';
+        innerHtml += '<td>' + ListDATA[i].T_STAN_COIN + '</td>';
+        innerHtml += '<td>' + ListDATA[i].T_COUNTRY + '</td>';
+        innerHtml += '<td>' + ListDATA[i].T_COUNTRY_NAME + '</td>';
+        innerHtml += '<td>' + ListDATA[i].T_STATE + '</td>';
+        if (ListDATA[i].T_COUNTRY === "KRW") {
+          innerHtml += '<td class="btn-s-blue"> ' + comma(ListDATA[i].T_AMOUNT) + ' ₩ </td>' ;
+        } else if (ListDATA[i].T_COUNTRY === "JPY") {
+          innerHtml += '<td class="btn-s-orange">' + comma(ListDATA[i].T_AMOUNT) + ' ￥ </td>' ;
+
+        } else if (ListDATA[i].T_COUNTRY === "CNY") {
+
+          innerHtml += '<td  class="btn-s-green">' + comma(ListDATA[i].T_AMOUNT) + ' 元 </td>' ;
+        } else if (ListDATA[i].T_COUNTRY === "USD") {
+
+          innerHtml += '<td class="btn-s-red">' + comma(ListDATA[i].T_AMOUNT) + ' $ </td>' ;
+
+        }
+        innerHtml += '<td>' + ListDATA[i].T_SDATE + '</td>';
+        innerHtml += '<td>' + ListDATA[i].T_EDATE + '</td>';
+        innerHtml += '<td>' + ListDATA[i].T_IUSER + '</td>';
+        innerHtml += '<td>' + ListDATA[i].T_IDATE + '</td>';
+        // innerHtml += '<td><a class="btn-table-change" onclick="changeFeeBook("0",' + i + ')">' + using + '</a></td>';
+        // innerHtml += '<td><a class="btn-table-change" onclick="changecoinBook(1,' + i + ')">삭제</a></td>';
+        innerHtml += '</tr>';
+      }
+
+      $("tbody[name=tableData]").append(innerHtml)
+      var innerHtml = '';
+      innerHtml += '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+      $("ul[name=paging]").empty()
+      for (var i = 1; i <= nowPages; i++) {
+        if (currentPage == i) {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a class="active">' + ((pageLevel * 5) + i) + '</a> </li>';
+        } else {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a>' + ((pageLevel * 5) + i) + '</a> </li>';
+        }
+      }
+      innerHtml += '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+      $("ul[name=paging]").append(innerHtml)
+    })
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function changecoinBook(val, idx) {
+    const curent_YN  =  ListDATA[idx].D_USE_OK
+    const Cdx  =  ListDATA[idx].D_SEQ
+    var url;
+    if (val == 0) {
+      url = 'setFeeaddress'
+
+    } else {
+      url = 'delfeeaddress'
+      if (curent_YN == "Y") {
+        if (!confirm("수수료를 지급 받고 있는 주소입니다.  \/그래도 삭제하시겠습니까?")) {
+          return
+        }
+      }
+    }
+    reqApi({
+      URL: url,
+      PARAM: {
+        IDX: Cdx+ ""
+      }
+    }).then(data => {
+      if (data.getsetAddress.RESULT=== 0 ) {
+        alert ("정상수정처리 되었습니다.")
+      } else {
+        alert ("처리에 실패하였습니다.")
+      }
+
+      console.log(data);
+      getList()
+    })
+
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+
+
+  function comma(num){
+    var len, point, str;
+
+    num = num + "";
+    point = num.length % 3 ;
+    len = num.length;
+
+    str = num.substring(0, point);
+    while (point < len) {
+        if (str != "") str += ",";
+        str += num.substring(point, point + 3);
+        point += 3;
+    }
+
+    return str;
+
+}
+
+
+
+</script>

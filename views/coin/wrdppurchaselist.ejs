@@ -1,0 +1,182 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>WRDP (전환)구매 내역</h1>
+          <div class="row">
+            <p class="fl-l">WRD 코인 구매 해서 WRDP 전환 내역 확인합니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>구매신청관리</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>WRDP (전환)구매 내역</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <div class="conts-box pb-0">
+
+              <div class="search-box border-l0 border-r0 p-5 bg-grey mb-30">
+                <div class="row ">
+                  <div class="w100p fl-l m-0">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">관리자 주소 </label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" id="COINADDR" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="w33p fl-l m-0">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">
+                        <data-tag name="SYMBOL"></data-tag> 코인시세
+                      </label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" id="C_LAST_PRICE" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w33p fl-l m-0">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">ETH 잔액</label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" readonly id="ETHVAL">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w33p fl-l m-0">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">
+                        <data-tag name="SYMBOL"></data-tag> 잔액
+                      </label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" readonly id="COINVAL">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="search-box border-l0 border-r0 p-5">
+                <div class="row">
+
+                  <div class="w100p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">전환구매일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time1">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <!-- 달력 -->
+                  <link rel="stylesheet" href="../views/include/datepicker.css">
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function() {
+                      $("#datepicker1, #datepicker2").datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: "both",
+                        buttonImage: "../views/images/calendar-5.png",
+                        buttonImageOnly: true,
+                        buttonText: "Select date"
+                      });
+                    });
+                  </script>
+
+                </div>
+              </div>
+              <!--from-section-->
+
+              <div class="from-section mb-0 mt-20">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onclick="getList()">회원검색 하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div>
+            <!--conts-box-->
+
+
+            <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">WRDP (전환)구매 내역</h2>
+                  <div class="fl-r mt-10">
+                    <a class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','KRWComplateList')">엑셀 다운로드</a>
+                  </div>
+                </div>
+
+                <div class="table-box with-app-btc">
+                  <div class="table-over-box">
+                    <table border="0" id="excelTable">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>아이디</th>
+                          <th>구매번호</th>
+                          <th>구매신청일시</th>
+                          <th>구매완료일시</th>
+                          <th class="tx-r">구매 금액</th>
+                          <th class="tx-r">전환 WRDP 수량</th>
+                          <th class="tx-r">W-PAY적립금액</th>
+                          <th>상태</th>
+                          <th>관리하기</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="paging fl-r">
+                    <ul class="row">
+                      <li><a><i class="fa fa-angle-left"></i></a></li>
+                      <li><a class="active">1</a></li>
+                      <li><a>2</a></li>
+                      <li><a>3</a></li>
+                      <li><a>4</a></li>
+                      <li><a>5</a></li>
+                      <li><a><i class="fa fa-angle-right"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!--conts-box-->
+
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>

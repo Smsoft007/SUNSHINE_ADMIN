@@ -1,0 +1,266 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+          <h1>무통장 입금 리스트</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>기본관리정책</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>무통장 입금 설정</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+          <div class="cont-whitebox">
+
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 p-5">
+                <div class="row">
+                  <div class="w50p fl-l m-0">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value="1">은행명</option>
+                          <option value="2">계좌번호</option>
+                          <option value="3">예금주</option>
+                        </select>
+                        <input type="text" class="input" id="selText">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!--search-box-->
+
+              <div class="from-section">
+
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">사용여부</label>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining1" value="A" checked>
+                        <label for="joining1">전체</label>
+                      </div>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining2" value="Y">
+                        <label for="joining2">사용</label>
+                      </div>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining3" value="N">
+                        <label for="joining3">미사용</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+
+
+
+
+              </div>
+              <!--from-section-->
+
+              <div class="from-section mb-0">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onclick="getList()">검색 하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div>
+            <!--conts-box-->
+
+
+            <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">무통장 입금 리스트 <span>검색 5명 / 전체 5명</span></h2>
+                  <div class="fl-r">
+                    <a href="/default/bankbook-set" class="fl-l btn-Add-set">추가하기</a>
+                    <a href="#" class="btn-excel-down fl-l">엑셀 다운로드</a>
+                    <select>
+                      <option>회원가입일</option>
+                      <option>최종로그인</option>
+                      <option>이름</option>
+                      <option>등급</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>사용사이트</th>
+                          <th>은행국가</th>
+                          <th>은행명</th>
+                          <th>계좌번호</th>
+                          <th>예금주명</th>
+                          <th>최종변경자</th>
+                          <th>최종변경일</th>
+                          <th>사용여부</th>
+                          <th>관리하기</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="paging fl-r">
+                    <ul class="row" name="tableData">
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!--conts-box-->
+
+          </div>
+        </section>
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var totalPage = 0;
+  var sMemberId = "";
+  var data;
+  var ListDATA = [];
+  $(document).ready(() => {
+    getList()
+  })
+
+  function getList() {
+    $("tbody[name=tableData]").empty()
+    var param = {}
+    //  param['SECHER1_TITLE'] = ($("#selType").val() == "") ? " " : $("#selType").val()
+    // param['UN_ESECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+    param['SECHER1_TITLE'] = " "
+    param['UN_ESECHER_TEXT'] = " "
+    param['B_CUR_YN'] = $(':radio[name="joining"]:checked').val();
+    param['SITE_CODE'] = "01";
+    param['CUR_PAGING'] = currentPage + ""
+    param['PAGING_NO'] = "10"
+    reqApiList({
+      URL: 'getPassBook',
+      PARAM: param
+    }).then((data) => {
+      ListDATA = data.PASSBOOK
+      // if (data.CNT.ALL_CNT != 0) {
+      //   cnt = data.CNT.ALL_CNT
+      //   totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+      //   pageLevel = Math.floor(currentPage / (pageRange + 1))
+      //   nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+      // }
+      var innerHtml = ""
+      for (var i = 0; i < ListDATA.length; i++) {
+        console.log(ListDATA[i].B_CUR_YN);
+        var using = (ListDATA[i].B_CUR_YN == "Y") ? "사용" : "미사용"
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + ListDATA[i].ROW_NOMBER + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_SIGNIN_NAME + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_COUNTRY + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_NAME + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_ACCOUNT + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_BOWNER + '</td>';
+        innerHtml += '<td>' + ListDATA[i].B_BOWNER + '</td>';
+        innerHtml += '<td><a class="btn-table-change" onclick="changePassBook(0,' + i + ')">' + using + '</a></td>';
+        innerHtml += '<td><a class="btn-table-change" onclick="changePassBook(1,' + i + ')">삭제</a></td>';
+        // innerHtml += '<td><a class="btn-table-change" onclick="changePassBook("0",' + i + ')">' + using + '</a></td>';
+        // innerHtml += '<td><a class="btn-table-change" onclick="changePassBook("1",' + i + ')">삭제</a></td>';
+        innerHtml += '</tr>';
+      }
+      $("tbody[name=tableData]").append(innerHtml)
+      // var innerHtml = '';
+      // innerHtml += '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+      // $("ul[name=paging]").empty()
+      // for (var i = 1; i <= nowPages; i++) {
+      //   if (currentPage == i) {
+      //     innerHtml += '<li onclick="movePage(' + i + ')"> <a class="active">' + ((pageLevel * 5) + i) + '</a> </li>';
+      //   } else {
+      //     innerHtml += '<li onclick="movePage(' + i + ')"> <a>' + ((pageLevel * 5) + i) + '</a> </li>';
+      //   }
+      // }
+      // innerHtml += '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+      // $("ul[name=paging]").append(innerHtml)
+    })
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function changePassBook(val, idx) {
+    var url;
+    if (val == 0) {
+      url = 'setPassBook'
+    } else {
+      url = 'delPassBook'
+      if (ListDATA[idx].B_CUR_YN == "Y") {
+        if (!confirm("사용중인 계좌를 삭제하시겠습니까?")) {
+          return
+        }
+      }
+    }
+    reqApi({
+      URL: url,
+      PARAM: {
+        B_IDX: ListDATA[idx]['B_IDX'] + ""
+      }
+    }).then(data => {
+      console.log(data);
+      getList()
+    })
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+</script>

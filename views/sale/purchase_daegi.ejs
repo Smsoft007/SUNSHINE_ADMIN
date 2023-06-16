@@ -1,0 +1,472 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>구매 대기리스트</h1>
+          <div class="row">
+            <p class="fl-l">구매 대기리스트</p>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 p-5 mb-20">
+             
+                <div class="row">
+                  <div class="w50p fl-l mb-5">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value="1" selected>아이디</option>
+                          <option value="2">이름</option>
+                          <option value="3">전화번호</option>
+                          <option value="4">이메일</option>
+                        </select>
+                        <input type="text" class="input" id="selText" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w50p fl-l mb-5">
+                    <div class="form-box row">
+                      <label class="fl-l">구매대행신청일</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1" />
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <link
+                    rel="stylesheet"
+                    href="../views/include/datepicker.css"
+                  />
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function () {
+                      $('#datepicker1, #datepicker2').datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: 'both',
+                        buttonImage: '../views/images/calendar-5.png',
+                        buttonImageOnly: true,
+                        buttonText: 'Select date',
+                      });
+                    });
+                  </script>
+                </div>
+              </div>
+              <!--search-box-->
+
+              <div class="from-section mb-0">
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onClick="getList()">회원검색 하기</a>
+                </div>
+              </div>
+              <!--from-section-->
+            </div>
+            <!--conts-box-->
+
+            <div class="conts-box pb-0">
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">
+                     리스트<span>검색 00명 /대기  00 KRW</span>
+                  </h2>
+                  <div class="fl-r">
+                    <a
+                      href="#"
+                      class="btn-excel-down fl-l"
+                      onclick="commonLib.fnExcelReport('excelTable','UserList')"
+                      >엑셀 다운로드</a
+                    >
+
+                     <select id="SECHER1_TITLE4" name="SECHER1_TITLE4">
+                      <option value="D_DATE">최근가입순</option>
+                      <option value="SECHER_TEXT">아이디 오름차순</option>
+                      <option value="SECHER_TEXT">아이디 내림차순</option>
+                    </select> 
+                  </div>
+                </div>
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0" id="excelTable">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>신청일자</th>
+                          <th>신청자ID</th>
+                          <th>신청자명</th>
+                          <th>핸드폰</th>
+                          <th>추천자ID</th>
+                          <th>신청상품</th>
+                          <th>상품가격(USD)</th>
+                          <th>1TRX/KRW</th>
+                          <th>KRW환산금액</th>
+                          <th>입금자</th>
+                          <th>관리하기</th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody name="tableData"></tbody>
+                    </table>
+                    <!--/CONTENT LIST--->
+                  </div>
+
+                  <div class="row">
+                    <div class="paging fl-r">
+                      <ul class="row" name="paging">
+                        <!-- <li><a><i class="fa fa-angle-left"></i></a></li>
+                        <li><a class="active">1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li><a>4</a></li>
+                        <li><a>5</a></li>
+                        <li><a><i class="fa fa-angle-right"></i></a></li> -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--conts-box-->
+          </div>
+        </section>
+      </div>
+      <!--main-wrap-->
+    </div>
+    <!--row-->
+  </div>
+  <!--wrap--->
+
+  <!--삭제/몰수 팝업-->
+  <div class="popup-bg">
+    <!--삭제/몰수 팝업-->
+    <div id="popup" class="forfeit-cont">
+      <div class="pop-title">
+        <h2>구매상세정보 </h2>
+        <a class="close"><i class="sm sm-multiply"></i></a>
+      </div>
+
+      <div class="pop-conts">
+        <div class="pop-form-box row">
+          <p class="fl-l">구매신청자ID</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_UID" readonly />
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">구매신청자명</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_NAME_H" readonly />
+            <input type="text" class="input" id="P_LOG" readonly />
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">신청자연락처</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_HP" readonly />
+          </div>
+        </div>
+
+         <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">신청일시</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="D_DATE" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">신청상품명</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="D_GNAME" readonly>
+              </div>
+            </div>
+          </div>
+        </div> 
+         <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">신청상품가</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="D_PRICE" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">1KRW시세</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="M_KRATE" readonly>
+              </div>
+            </div>
+          </div>
+        </div> 
+         <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">KRW환산금액</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="M_KAMOUNT" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">입금자명</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="M_BSENDER" readonly>
+              </div>
+            </div>
+          </div>
+        </div> 
+         <!-- <div class="row mrow">
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">수수료수량</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="MS_FEEQTY" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="w50p fl-l">
+            <div class="pop-form-box row">
+              <p class="fl-l">실출금수량</p>
+              <div class="pop-input-box fl-l">
+                <input type="text" class="input" id="MS_QTY" readonly>
+                <input type="hidden" class="input" id="MS_KEY" >
+              </div>
+            </div>
+          </div>
+        </div>  -->
+        <div class="pop-btn-box">
+          <div class="row mrow">
+            <div class="w33p fl-l">
+              <a class="btn-pop close" onClick="Purchase_Application()">매출승인</a>
+            </div>
+            <!-- <div class="w33p fl-l">
+              <a class="btn-pop close">코인몰수</a>
+            </div> -->
+            <div class="w33p fl-l">
+              <a class="btn-pop close">닫기</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var totalPage = 0;
+  var sMemberId = '';
+  var data;
+
+  function init() {
+    function open_btc_cancel_reason_withdrawal(url) {
+      $('.popup-bg').fadeIn(200, function () {
+        $('#popup.forfeit-cont').fadeIn(500);
+        $('#btc-forfeit').attr('src', url);
+      });
+    }
+
+    function close_btc_cancel_reason_withdrawal(url) {
+      $('#popup.forfeit-cont').fadeOut(500, function () {
+        $('.popup-bg').fadeOut(200);
+      });
+    }
+    $('.btn-forfeit').click(function () {
+      $('.popup-bg').fadeIn(200, function () {
+        $('#popup.forfeit-cont').fadeIn(500);
+      });
+    });
+    $('#popup.forfeit-cont a.close').click(function () {
+      $('#popup.forfeit-cont').fadeOut(500, function () {
+        $('.popup-bg').fadeOut(200);
+      });
+    });
+  }
+
+
+  
+  $(document).ready(() => {
+    getList();
+    // Balance();
+  });
+
+  function getList() {
+    $('tbody[name=tableData]').empty();
+    var param = {};
+    param['D_SDATE'] = $('#datepicker1').datepicker('getDate')
+      ? $('#datepicker1').datepicker('getDate').format('yyyy-MM-dd')
+      : ' ';
+    param['D_EDATE'] = $('#datepicker2').datepicker('getDate')
+      ? $('#datepicker2').datepicker('getDate').format('yyyy-MM-dd')
+      : ' ';
+    param['SECHER1_TITLE'] = $('#selType').val();
+    param['UN_ESECHER_TEXT'] =
+      $('#selText').val() == '' ? ' ' : $('#selText').val();
+    param['CNT'] = 'true';
+    param['GUBUN'] = 'TRX'; 
+    param['CUR_PAGING'] = currentPage + '';
+    param['PAGING_NO'] = '10';
+    reqApiList({
+      URL: 'AgetpurchaseList',
+      PARAM: param,
+    }).then((data) => {
+      if (data.CNT.ALL_CNT != 0) {
+        cnt = data.CNT.ALL_CNT;
+        totalPage = Math.floor(cnt / 10) + (cnt % 10 != 0 ? 1 : 0);
+        pageLevel = Math.floor(currentPage / (pageRange + 1));
+        nowPages =
+          totalPage - pageLevel * 5 > 5 ? 5 : totalPage - pageLevel * 5;
+      }
+      for (var i = 0; i < data.APURCLIST.length; i++) {
+        var innerHtml = '';
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + data.APURCLIST[i].ROW_NOMBER + '</td>';
+        innerHtml += '<td>' + data.APURCLIST[i].D_DATE + '</td>';
+        innerHtml += '<td>' + data.APURCLIST[i].D_UID + '</td>';
+        innerHtml += '<td>' + data.APURCLIST[i].D_NAME_H + '</td>';
+        innerHtml += '<td>' + data.APURCLIST[i].D_HP + '</td>';
+        innerHtml += '<td>' + data.APURCLIST[i].P_UID + '</td>';
+        innerHtml += '<td>' + data.APURCLIST[i].D_GNAME + '</td>';
+        innerHtml += '<td>' + data.APURCLIST[i].D_PRICE + '</td>';
+        innerHtml += '<td>' + data.APURCLIST[i].M_KRATE + '</td>';
+        innerHtml += '<td>' +  commonLib.comma(data.APURCLIST[i].M_KAMOUNT); + '</td>';
+        innerHtml += '<td>' + data.APURCLIST[i].M_BSENDER + '</td>';
+      
+         
+ 
+
+
+        innerHtml +=
+          '<td><a class="btn-table-change btn-forfeit" onClick="getPuchaseInfo(\''+
+          data.APURCLIST[i].P_LOG +
+          '\')" class="btn-table-change">매출정보확인</a> ';
+
+        innerHtml +=
+          '<a class="btn-table-change btn-forfeit" onClick="getMeberCancel(\''+
+          data.APURCLIST[i].P_LOG +
+          ",'" +
+          data.APURCLIST[i].P_LOG +
+          '\')">취소/보류</a></td>';
+        innerHtml += '</tr>';
+        $('tbody[name=tableData]').append(innerHtml);
+      }
+      var innerHtml = '';
+      innerHtml +=
+        '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+      $('ul[name=paging]').empty();
+      for (var i = 1; i <= nowPages; i++) {
+        if (currentPage == i) {
+          innerHtml +=
+            '<li onclick="movePage(' +
+            i +
+            ')"> <a class="active">' +
+            (pageLevel * 5 + i) +
+            '</a> </li>';
+        } else {
+          innerHtml +=
+            '<li onclick="movePage(' +
+            i +
+            ')"> <a>' +
+            (pageLevel * 5 + i) +
+            '</a> </li>';
+        }
+      }
+      innerHtml +=
+        '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+      $('ul[name=paging]').append(innerHtml);
+      init();
+    });
+  }
+
+  async function getPuchaseInfo(idx) {
+    console.log(idx);
+    var r = await reqApi({
+      URL: 'getpurchaseDetil',
+      PARAM: {
+        P_LOG : idx + '',
+      },
+    });
+    var member = r.PURCHASEDETAIL;
+    console.log(member);
+    
+    commonLib.bindValue(member);
+    $('#M_KAMOUNT').val(commonLib.comma(member.M_KAMOUNT));
+  }
+  
+
+  async function Purchase_Application() {
+    var Param = {};
+    Param['P_LOG'] = $('#P_LOG').val();
+    var r = await reqApi({
+      URL: 'purchase_application',
+      PARAM: Param,
+    });
+    
+     console.log(r)
+    
+    if (r.PURCHASEAPPLITION.RESULT=== 0) {
+
+         alert('구매대행 정상 처리되었습니다.');
+          location.reload();
+     } else  {   
+         alert('구매대행 실패하였습니다.');
+
+    }
+    
+    }    //   case 1:
+    //     break;
+    //     alert('전송에 실패 하였습니다.');
+    //   case 2:
+    //     alert('탈퇴한 회원입니다');
+    //     break;
+    //   case 3:
+    //     alert('전송에 실패하였습니다.');
+    //     break;
+    //   case 4:
+    //     alert('보유코인이 존재합니다');
+    //     break;
+    //   case 5:
+    //     alert('매칭대기중인 코인이 존재합니다');
+    //     break;
+    // }
+    
+
+  function movePage(page) {
+    currentPage = pageLevel * 5 + page;
+    getList();
+  }
+
+  function btnPage(pos) {
+    if (pos == 'bef' && currentPage > 1) {
+      currentPage--;
+    } else if (pos == 'next' && currentPage < totalPage) {
+      currentPage++;
+    }
+    getList();
+  }
+  
+</script>

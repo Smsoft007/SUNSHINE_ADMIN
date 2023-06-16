@@ -1,0 +1,405 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+          <h1>코인 거래내역</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>거래내역</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>코인 거래내역</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+          <div class="cont-whitebox">
+
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 p-5">
+                <div class="row">
+                  <div class="w50p fl-l m-0">
+                    <div class="search-form-box row">
+                      <label class="fl-l">수수료</label>
+                      <div class="select-input-box fl-l">
+                        <input type="text" class="input" id="FEE">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="search-box border-l0 border-r0 p-5">
+                <div class="row">
+                  <div class="w50p fl-l m-0">
+                    <div class="search-form-box row">
+                      <label class="fl-l">지정검색설정</label>
+                      <div class="select-input-box fl-l">
+                        <select id="TRADE_SECHER">
+                          <option value=" ">전체</option>
+                          <option value="1">판매자 아이디</option>
+                          <option value="2">구매자 아이디</option>
+                        </select>
+                        <input type="text" class="input" id="TRADE_TEXT">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l m-0">
+                    <div class="form-box row">
+                      <label class="fl-l">사용여부</label>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining1" value="A" checked>
+                        <label for="joining1">전체</label>
+                      </div>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining2" value="S">
+                        <label for="joining2">판매</label>
+                      </div>
+                      <div class="fl-l radio-box">
+                        <input type="radio" name="joining" id="joining3" value="B">
+                        <label for="joining3">구매</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="from-section">
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">코인</label>
+                      <div class="fl-l select-box">
+                        <select id="GUBUN">
+                          <option value="A" selected>전체</option>
+                          <option value="10">CTAG</option>
+                          <option value="20">TEC</option>
+                          <option value="30">BTC</option>
+                          <option value="40">Lite</option>
+                          <option value="50">ETH</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">거래일자 설정</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <script>
+                  $(function() {
+                    $("#datepicker1, #datepicker2").datepicker({
+                      dateFormat: 'yy.mm.dd',
+                      showOn: "both",
+                      buttonImage: "../views/images/calendar-5.png",
+                      buttonImageOnly: true,
+                      buttonText: "Select date"
+                    });
+                  });
+                </script>
+              </div>
+              <div class="from-section mb-0">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onclick="getList()">거래내역 검색하기</a>
+                </div>
+
+              </div>
+            </div>
+            <div class="conts-box pb-0">
+
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">코인 거래내역</h2>
+                  <div class="fl-r mt-10">
+                    <a href="#" class="btn-excel-down fl-l">엑셀 다운로드</a>
+                  </div>
+                </div>
+
+                <div class="table-box with-app-btc">
+                  <div class="table-over-box">
+                    <table border="0">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>진행상태</th>
+                          <th>코인종류</th>
+                          <th>거래종류</th>
+                          <th>거래일시</th>
+                          <th>TXID</th>
+                          <th>거래자주소</th>
+                          <th>거래ID</th>
+                          <th>거래자명</th>
+                          <th>거래자(HP)</th>
+                          <th >거래수량</th>
+                          <th>적립수수료</th>
+                          <th class="tx-r">SELLKEY</th>
+                          <th class="tx-r">BUYKEY</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="paging fl-r">
+                    <ul class="row" name="paging">
+                      <li><a><i class="fa fa-angle-left"></i></a></li>
+                      <li><a class="active">1</a></li>
+                      <li><a>2</a></li>
+                      <li><a>3</a></li>
+                      <li><a>4</a></li>
+                      <li><a>5</a></li>
+                      <li><a><i class="fa fa-angle-right"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="popup-bg">
+    <div id="popup" class="trade-list">
+
+      <div class="pop-title">
+        <h2>수수료 내역</h2>
+        <a class="close"><i class="sm sm-multiply"></i></a>
+      </div>
+
+      <div class="pop-conts">
+        <div class="pop-form-box row">
+          <p class="fl-l">상품번호</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="M_PROCODE" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">상품명</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="M_PNAME_KR" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">구매ID</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="M_BUY_ID" readonly>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">판매ID</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="M_SELL_ID" readonly>
+          </div>
+        </div>
+
+        <div class="pop-table">
+
+          <div class="table-over-box pop-trade-exchange-list">
+            <table border="0">
+              <thead>
+                <tr>
+                  <th>분류</th>
+                  <th>구매일시</th>
+                  <th>판매일시</th>
+                  <th class="tx-r">구매금액</th>
+                  <th class="tx-r">판매금액</th>
+                  <th class="tx-r">자동구매 수수료</th>
+                  <th class="tx-r">수당수수료</th>
+                </tr>
+              </thead>
+              <tbody name="popData">
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <div class="pop-btn-box">
+          <a class="btn-pop close">닫기</a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var totalPage = 0;
+  var sMemberId = "";
+  var data;
+  var ListDATA;
+  $(document).ready(() => {
+    getList()
+  })
+
+  function getList() {
+    $("tbody[name=tableData]").empty()
+    var param = {}
+    param['SECHER1_TITLE'] = ($("#TRADE_SECHER").val() == "") ? " " : $("#TRADE_SECHER").val()
+    param['SECHER_TEXT'] = ($("#TRADE_TEXT").val() == "") ? " " : $("#TRADE_TEXT").val()
+    param['GUBUN'] = ($("#GUBUN").val() == null) ? " " : $("#GUBUN").val()
+    param['CGUBUN'] = ' '
+    param['SITE_CODE'] = '01'
+    param['TRADE_GUBUN'] = $(':radio[name="joining"]:checked').val();
+    param['D_SDATE'] = ($("#datepicker1").datepicker("getDate")) ? $("#datepicker1").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['D_EDATE'] = ($("#datepicker2").datepicker("getDate")) ? $("#datepicker2").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['CNT'] = 'true'
+    param['CUR_PAGING'] = currentPage + ""
+    param['PAGING_NO'] = "10"
+    console.log(param)
+    reqApiList({
+      URL: 'getTradeFeeList',
+      PARAM: param
+    }).then((data) => {
+      ListDATA = data.TRADFEELIST
+      console.log(data);
+      $("#FEE").val(data.CNT.ALL_FEE)
+      if (data.CNT.ALL_CNT != 0) {
+        cnt = data.CNT.ALL_CNT
+        totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+        pageLevel = Math.floor(currentPage / (pageRange + 1))
+        nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+      }
+      for (var i = 0; i < ListDATA.length; i++) {
+        var innerHtml = ""
+        var gubun = (ListDATA[i].STATUS == '3') ? "체결신청.." : "체결완료"
+
+
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + ListDATA[i].ROW_NOMBER + '</td>';
+
+        if(ListDATA[i].CUR_YN === "N"){
+            innerHtml += '<td><span class="btn-s-grey">거래신청</span></td>';
+          }else if(ListDATA[i].CUR_YN === 'I'){
+            innerHtml += '<td><span class="btn-s-green">거래중</span></td>';
+          }else if(ListDATA[i].CUR_YN === 'W'){
+            innerHtml += '<td><span class="btn-s-orange">입금확인중</span></td>';
+          }else if(ListDATA[i].CUR_YN === 'Y'){
+            innerHtml += '<td><span class="btn-s-blue">거래완료</span></td>';
+          }else if(ListDATA[i].CUR_YN === 'C'){
+            innerHtml += '<td><span class="btn-s-red">거래취소</span></td>';
+          }
+
+          innerHtml += '<td>' + ListDATA[i].MS_SNAME + '</td>';
+
+        if (ListDATA[i].GUBUN =="SELL") {
+          innerHtml += '<td> <span class="btn-s-grey">' + ListDATA[i].GUBUN + '</span></td>'
+        }
+        else if (ListDATA[i].GUBUN =="BUY") {
+          innerHtml += '<td><span class="btn-s-green">' + ListDATA[i].GUBUN + '</span></td>';
+        }
+
+        innerHtml += '<td>' + ListDATA[i].MS_IDATE + '</td>';
+        innerHtml += '<td>' + ListDATA[i].TXID + '</td>';
+        innerHtml += '<td>' + ListDATA[i].MS_SENDADDR + '</td>'; + '</td>';
+        innerHtml += '<td>' + ListDATA[i].SUSERID + '</td>';
+        innerHtml += '<td>' + ListDATA[i].S_NAME + '</td>';
+        innerHtml += '<td>' + ListDATA[i].S_HP + '</td>';
+        innerHtml += '<td class="tx-r">' + ListDATA[i].MS_QTY + '</td>';
+        innerHtml += '<td><span class="btn-s-red">' + ListDATA[i].MS_FEE + '</span></td>';
+        innerHtml += '<td>' + ListDATA[i].SELLNO + '</td>';
+        innerHtml += '<td>' + ListDATA[i].BUYNO + '</td>';
+
+
+        /*if (ListDATA[i].STATUS == '3') {
+          innerHtml += '<td><a class="btn-table-change btn-cancel-withdrawal" onclick="openPop(' + i + ')">강제판매</a></td>';
+        } else {
+          innerHtml += '<td><a class="btn-table-change btn-cancel-withdrawal" onclick="openPop(' + i + ')">상세보기</a></td>';
+        }*/
+
+        innerHtml += '</tr>';
+        $("tbody[name=tableData]").append(innerHtml)
+      }
+      var innerHtml = '';
+      innerHtml += '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+      $("ul[name=paging]").empty()
+      for (var i = 1; i <= nowPages; i++) {
+        if (currentPage == i) {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a class="active">' + ((pageLevel * 5) + i) + '</a> </li>';
+        } else {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a>' + ((pageLevel * 5) + i) + '</a> </li>';
+        }
+      }
+      innerHtml += '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+      $("ul[name=paging]").append(innerHtml)
+      $("#popup.trade-list a.close").click(function() {
+        $("#popup.trade-list").fadeOut(500, function() {
+          $(".popup-bg").fadeOut(200);
+        });
+      });
+    })
+  }
+
+  function openPop(idx) {
+
+    $("tbody[name=popData]").empty()
+
+    var HISDATA = ListDATA[idx]
+    commonLib.bindValue(HISDATA)
+    var innerHtml = ""
+    var gubun = (HISDATA.STATUS == '3') ? '<td class="tx-red">판매완료</td>' : '<td class="tx-blue">구매완료</td>'
+    innerHtml += '<tr>';
+    innerHtml += gubun;
+    innerHtml += '<td>' + HISDATA.M_MACHDATE + '</td>';
+    innerHtml += '<td>' + HISDATA.M_OKDATE + '</td>';
+    innerHtml += '<td class="tx-r">' + HISDATA.M_BUYAMOUNT + '</td>';
+    innerHtml += '<td class="tx-r">' + HISDATA.M_SELLAMOUNT + '</td>';
+    innerHtml += '<td class="tx-r">' + HISDATA.M_AUTOFEE + '</td>';
+    innerHtml += '<td class="tx-r">' + HISDATA.M_SUDANG + '</td>';
+    innerHtml += '</tr>';
+    $("tbody[name=popData]").append(innerHtml)
+    $(".popup-bg").fadeIn(200, function() {
+      $("#popup.trade-list").fadeIn(500);
+    });
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+</script>

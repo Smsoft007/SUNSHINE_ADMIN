@@ -1,0 +1,245 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+
+        <section id="title-section">
+          <h1>기본 정보 설정</h1>
+          <div class="row">
+            <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+            <div class="fl-r">
+              <ul class="row">
+                <li>기본정보설정</li>
+                <li><i class="fa fa-angle-right"></i></li>
+                <li>약관/개인정보처리방침</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="cont-section">
+          <div class="cont-whitebox">
+
+            <ul class="row main-teb-menu">
+  						<li><a id="teb-menu1" href="/default/terms?lang=KR"><img src="../views/images/country/185.png"> 한국어</a></li>
+  						<li><a id="teb-menu2" href="/default/terms?lang=US"><img src="../views/images/country/211.png"> 영문</a></li>
+  						<li><a id="teb-menu3" href="/default/terms?lang=JP"><img src="../views/images/country/036.png"> 중문</a></li>
+  						<li><a id="teb-menu4" href="/default/terms?lang=CH"><img src="../views/images/country/097.png"> 일문</a></li>
+  					</ul>
+
+            <div class="conts-box pb-0">
+              <div class="from-section">
+                <div class="form-title">
+                  <h2>사이트 기본정보</h2>
+                </div>
+                <div class="form-tr row">
+                  <div class="w100p">
+                    <div class="form-box row">
+                      <label class="fl-l">약관 초기화</label>
+                      <div class="fl-l input-box">
+                        <a class="btn-reset" onclick="ReSetHTML_item1();">초기화</a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+                <div class="row">
+
+                  <div class="form-tr row terms-cont1">
+                    <div class="w100p">
+                      <div class="form-box row">
+                        <label class="fl-l">약관내용</label>
+                        <div class="input-box fl-l">
+                          <textarea name="item1_content" id="item1_content">
+  											</textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--form-tr-->
+
+
+                </div>
+              </div>
+              <!--from-section-->
+
+
+              <div class="from-section">
+                <div class="form-title">
+                  <h2>개인정보처리방침 내용</h2>
+                </div>
+
+                <div class="form-tr row">
+                  <div class="w100p">
+                    <div class="form-box row">
+                      <label class="fl-l">개인정보처리방침 초기화</label>
+                      <div class="fl-l input-box">
+                        <a class="btn-reset" onclick="ReSetHTML_item2();">초기화</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+                <div class="form-tr row">
+                  <div class="w100p">
+                    <div class="form-box row">
+                      <label class="fl-l">개인정보처리방침 내용</label>
+                      <div class="input-box fl-l">
+
+                        <textarea name="item2_content" id="item2_content">
+  										</textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--form-tr-->
+
+              </div>
+              <!--from-section-->
+
+
+              <div class="from-section">
+
+                <div class="form-btn-box">
+                  <a class="btn-change" onclick="setTerm()">변경사항 저장하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+
+              <div class="from-section">
+
+                <div class="form-guide">
+                  <h4>[표준약관이용여부] 표준약관이란 무엇인가요?</h4>
+                  <ul>
+                    <li>건전한 거래질서를 확립하고 불공정한 내용의 약관이 통용되는 것을 방지하기 위하여 공정거래위원회에서 마련한 표준약관입니다. </li>
+                    <li>전자상거래 표준약관을 사용하시면 공정거래위원회 표준약관 로고를 사용하실 수 있습니다. <br>(단, 표준약관을 사용하지 않음에도 공정거래위원회 표준약관 로고를 표시한 경우 전자상거래소비자보호에관한법률에 의거 심사와 시정조치 및 이행조치를 받을 수 있습니다.) </li>
+                  </ul>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div><!-- conts-box -->
+
+
+
+          </div>
+        </section>
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+</body>
+
+
+
+
+
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script type="text/javascript">
+  var PRIVARY = "";
+  var TERMS = "";
+  var oEditors = [];
+  var sLang = "ko_KR"; // 언어 (ko_KR/ en_US/ ja_JP/ zh_CN/ zh_TW), default = ko_KR
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const tlang = urlParams.get("lang");
+
+  if(tlang === "KR"){
+    $("teb-menu1").addClass("active")
+  }else if(tlang === "US"){
+    $("teb-menu2").addClass("active")
+  }else if(tlang === "JP"){
+    $("teb-menu3").addClass("active")
+  }else if(tlang === "CH"){
+    $("teb-menu4").addClass("active")
+  }
+  $(document).ready(() => {
+    reqApi({
+      URL: 'getTerm',
+      PARAM: {
+        "T_COUNTRY": tlang
+      }
+    }).then(data => {
+    
+      for (var i = 1; i < 3; i++) {
+        nhn.husky.EZCreator.createInIFrame({
+          oAppRef: oEditors,
+          elPlaceHolder: "item" + i + "_content",
+          sSkinURI: "/editorSkin",
+          htParams: {
+            bUseToolbar: true, // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+            bUseVerticalResizer: true, // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+            bUseModeChanger: true, // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+            fOnBeforeUnload: function() {}
+           // I18N_LOCALE: sLang
+          }, //boolean
+          fOnAppLoad: function() {
+            ReSetHTML_item1()
+            ReSetHTML_item2()
+          },
+          fCreator: "createSEditor2"
+        });
+      }
+      PRIVARY = data.TERM.T_PRIVARY
+      TERMS = data.TERM.T_TERMS
+    })
+  })
+
+  function init() {
+    reqApi({
+      URL: 'getTerm',
+      PARAM: {
+        "T_COUNTRY": tlang
+      }
+    }).then(data => {
+      PRIVARY = data.TERM.T_PRIVARY
+      TERMS = data.TERM.T_TERMS
+      ReSetHTML_item1()
+      ReSetHTML_item2()
+    })
+  }
+
+  function setTerm() {
+    reqApi({
+      URL: 'setTerm',
+      PARAM: {
+        "T_COUNTRY": tlang,
+        "UN_ETERMS": oEditors.getById["item1_content"].getContents(),
+        "UN_EPRIVACY": oEditors.getById["item2_content"].getContents()
+      }
+    }).then(data => {
+      if(data["TERM"]['']==0){
+        alert("저장완료")
+        init()
+      }
+    })
+  }
+
+  function ReSetHTML_item1() {
+    oEditors.getById["item1_content"].exec("SET_IR", [TERMS]);
+  }
+
+  function ReSetHTML_item2() {
+    oEditors.getById["item2_content"].exec("SET_IR", [PRIVARY]);
+  }
+</script>

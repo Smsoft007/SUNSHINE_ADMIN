@@ -1,0 +1,526 @@
+<% include ../head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ../left-menu %>
+      <div class="main-wrap">
+        <% include ../header %>
+        <section id="title-section">
+          <h1>수수료 관리</h1>
+          <div class="row">
+            <p class="fl-l">수수료를 추가 지급하거나 관리합니다.</p>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <div class="conts-box pb-0">
+              <div class="search-box border-l0 border-r0 p-5 mb-20">
+                <div class="row">
+                  <div class="w50p fl-l mb-5">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">검색어</label>
+                      <div class="select-input-box fl-l">
+                        <select id="selType">
+                          <option value="1" selected>아이디</option>
+                          <option value="2">이름</option>
+                          <option value="3">전화번호</option>
+                          <option value="4">이메일</option>
+                        </select>
+                        <input type="text" class="input" id="selText">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="w50p fl-l mb-5">
+                    <div class="form-box row">
+                      <label class="fl-l">작성일자</label>
+                      <div class="fl-l calendar-input-box" id="Search-time">
+                        <div class="row">
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker1">
+                          </div>
+                          <span class="fl-l"> ~ </span>
+                          <div class="calendar-input-btn-box fl-l">
+                            <input type="text" id="datepicker2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <link rel="stylesheet" href="../views/include/datepicker.css">
+                  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                  <script>
+                    $(function() {
+                      $("#datepicker1, #datepicker2").datepicker({
+                        dateFormat: 'yy.mm.dd',
+                        showOn: "both",
+                        buttonImage: "../views/images/calendar-5.png",
+                        buttonImageOnly: true,
+                        buttonText: "Select date"
+                      });
+                    });
+                  </script>
+
+                </div>
+                <div class="row">
+                  <div class="w50p fl-l mb-5">
+                    <div class="search-form-box row pl-5 pr-5">
+                      <label class="fl-l">입출구분</label>
+                      <div class="select-box fl-l">
+                        <select id="selType">
+                          <option value="1" selected>전체</option>
+                          <option value="2">무통장</option>
+                          <option value="3">서비스</option>
+                          <option value="4">기준코인</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--search-box-->
+
+
+              <div class="from-section mb-0">
+
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onClick="getList()">검색하기</a>
+                </div>
+
+              </div>
+              <!--from-section-->
+
+            </div>
+            <!--conts-box-->
+
+            <div class="conts-box pb-0">
+              <div class="from-section">
+                <div class="form-title row">
+                  <h2 class="fl-l">수수료사용이력</h2>
+                  <div class="fl-r">
+                                        
+                    <a href="#" class="btn-excel-down fl-l" onclick='EXCEL_getList()'>전체데이타 추출</a> 
+                     <a href="#" class="btn-excel-down fl-l" onclick="commonLib.fnExcelReport('excelTable','feeList')">엑셀 다운로드</a>                     
+
+                    <a class="btn-excel-down fl-l btn-feemanage">추가지급</a>
+
+                    <!-- <select id="SECHER1_TITLE4" name="SECHER1_TITLE4">
+                      <option value="D_DATE">최근가입순</option>
+                      <option value="SECHER_TEXT">아이디 오름차순</option>
+                      <option value="SECHER_TEXT">아이디 내림차순</option>
+                    </select> -->
+                  </div>
+                </div>
+                <div class="table-box mem-list">
+                  <div class="table-over-box">
+                    <table border="0" id="excelTable">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>회원ID</th>
+                          <th>회원명</th>
+                          <th>입출금일시</th>
+                          <th>입출금구분</th>
+                          <th>입금수수료</th>
+                          <th>출금수수료</th>
+                          <th>입금자명</th>
+                          <th>입금구분</th>
+                          <th>입금확인</th>
+                        </tr>
+                      </thead>
+                      <tbody name="tableData">
+
+                      </tbody>
+                      
+                        <!-- <tr>
+                          <td>1</td>
+                          <td>abcd3</td>
+                          <td>김숙희</td>
+                          <td>2021.12.12 00:00:00.000</td>
+                          <td>무통장입금신청</td>
+                          <td>3000</td>
+                          <td>0</td>
+                          <td>김숙희(4562)</td>
+                          <td>입금대기</td>
+                          <td><a class="btn-table-change btn-red">입금확인</a></td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td>abcd3</td>
+                          <td>김숙희</td>
+                          <td>2021.12.12 00:00:00.000</td>
+                          <td>무통장입금신청</td>
+                          <td>3000</td>
+                          <td>0</td>
+                          <td>김숙희(4562)</td>
+                          <td>입금완료</td>
+                          <td><a class="btn-table-change">확인완료</a></td>
+                        </tr>
+                      </tbody> -->
+                    </table>
+                    <!--/CONTENT LIST--->
+                  </div>
+
+                  <div class="row">
+                    <div class="paging fl-r">
+                      <ul class="row" name="paging">
+                        <!-- <li><a><i class="fa fa-angle-left"></i></a></li>
+                        <li><a class="active">1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li><a>4</a></li>
+                        <li><a>5</a></li>
+                        <li><a><i class="fa fa-angle-right"></i></a></li> -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!--conts-box-->
+
+          </div>
+        </section>
+
+
+      </div>
+      <!--main-wrap-->
+
+    </div>
+    <!--row-->
+
+  </div>
+  <!--wrap--->
+
+
+  <!--삭제/몰수 팝업-->
+  <div class="popup-bg">
+
+
+    <!--삭제/몰수 팝업-->
+    <div id="popup" class="feemanage-cont">
+
+      <div class="pop-title">
+        <h2>수수료 추가지급</h2>
+        <a class="close"><i class="sm sm-multiply"></i></a>
+      </div>
+
+      <div class="pop-conts">
+        <div class="pop-form-box row">
+          <p class="fl-l">입금구분</p>
+          <div class="pop-input-box fl-l">
+              <select class="" id="setype">
+              <option value="0">선택해주세요.</option>
+              <option value="1">서비스지급</option>
+              <option value="2">무통장입금처리</option>
+            </select>
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">아이디</p>
+          <div class="pop-input-box fl-l">
+            <input type="text" class="input" id="D_UID" >
+          </div>
+        </div>
+        <div class="pop-form-box row">
+          <p class="fl-l">수수료''</p>
+          <div class="pop-input-box fl-l">
+            <input type="number" class="input" id="D_QTY" >
+          </div>
+        </div>
+
+        <div class="pop-btn-box">
+          <div class="row mrow">
+            <div class="w50p fl-l">
+              <a class="btn-pop close" onClick="addrice()">수수료추가하기</a>
+            </div>
+            <div class="w50p fl-l">
+              <a class="btn-pop close">닫기</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+
+<script>
+
+  var nowPages = 1;
+  var pageRange = 5;
+  var currentPage = 1;
+  var pageLevel = 0;
+  var totalPage = 0;
+  var sMemberId = "";
+  var data;
+
+  function init() {
+    function open_btc_cancel_reason_withdrawal(url) {
+      $(".popup-bg").fadeIn(200, function() {
+        $("#popup.forfeit-cont").fadeIn(500);
+        $('#btc-forfeit').attr('src', url);
+      });
+    }
+
+    function close_btc_cancel_reason_withdrawal(url) {
+      $("#popup.forfeit-cont").fadeOut(500, function() {
+        $(".popup-bg").fadeOut(200);
+      });
+    }
+    $(".btn-forfeit").click(function() {
+      $(".popup-bg").fadeIn(200, function() {
+        $("#popup.forfeit-cont").fadeIn(500);
+      });
+    });
+    $("#popup.forfeit-cont a.close").click(function() {
+      $("#popup.forfeit-cont").fadeOut(500, function() {
+        $(".popup-bg").fadeOut(200);
+      });
+    });
+  }
+
+  $(".btn-feemanage").click(function() {
+    $(".popup-bg").fadeIn(200, function() {
+      $("#popup.feemanage-cont").fadeIn(500);
+    });
+  });
+  $("#popup.feemanage-cont a.close").click(function() {
+    $("#popup.feemanage-cont").fadeOut(500, function() {
+      $(".popup-bg").fadeOut(200);
+    });
+  });
+
+
+  $(document).ready(() => {
+    getList()
+  })
+
+
+  function getList() {
+    $("tbody[name=tableData]").empty()
+    var param = {}
+    param['D_SDATE'] = ($("#datepicker1").datepicker("getDate")) ? $("#datepicker1").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['D_EDATE'] = ($("#datepicker2").datepicker("getDate")) ? $("#datepicker2").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['SECHER1_TITLE'] = $("#selType").val()
+    param['SECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+
+    param['SECHER1_TITLE'] = $("#selType").val()
+    param['SECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+
+    param['CNT'] = 'true'
+    param['CUR_PAGING'] = currentPage + ""
+    param['PAGING_NO'] = "10"
+    reqApiList({
+      URL: 'rice_list',
+      PARAM: param
+    }).then((data) => {
+      if (data.CNT.ALL_CNT != 0) {
+        cnt = data.CNT.ALL_CNT
+        totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+        pageLevel = Math.floor(currentPage / (pageRange + 1))
+        nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+      }
+      for (var i = 0; i < data.RICELIST.length; i++) {
+        var innerHtml = ""
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + data.RICELIST[i].ROW_NOMBER + '</td>';
+        innerHtml += '<td>' + data.RICELIST[i].K_DNO + '</td>';
+        innerHtml += '<td>' + data.RICELIST[i].K_UID + '</td>';
+        innerHtml += '<td>' + data.RICELIST[i].K_IDATE + '</td>';
+        innerHtml += '<td>' + data.RICELIST[i].G_INOUT + '</td>';
+        innerHtml += '<td>' + data.RICELIST[i].K_AMT1 + '</td>';
+        innerHtml += '<td>' + data.RICELIST[i].K_AMT2 + '</td>';
+        innerHtml += '<td>' + data.RICELIST[i].BANKNAME + '</td>';
+
+        
+
+         if (data.RICELIST[i].K_CUR_YN == 'N') {
+          innerHtml += '<td class="tx-red">' + data.RICELIST[i].OK_GUBUN + '</td>';
+          
+          innerHtml += '<td><a class="btn-table-change btn-red" onClick="ponddeposit_OK('+data.RICELIST[i].K_SEQ+')">'+data.RICELIST[i].INOUT_GUBUN +'</a></td>';
+         } else {
+          innerHtml += '<td>' + data.RICELIST[i].OK_GUBUN + '</td>';
+          innerHtml += '<td><a class="btn-table-change" >'+data.RICELIST[i].INOUT_GUBUN +'</a></td>';
+          
+         }
+  
+        innerHtml += '</tr>';
+        $("tbody[name=tableData]").append(innerHtml)
+      }
+      var innerHtml = '';
+      innerHtml += '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+      $("ul[name=paging]").empty()
+      for (var i = 1; i <= nowPages; i++) {
+        if (currentPage == i) {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a class="active">' + ((pageLevel * 5) + i) + '</a> </li>';
+        } else {
+          innerHtml += '<li onclick="movePage(' + i + ')"> <a>' + ((pageLevel * 5) + i) + '</a> </li>';
+        }
+      }
+      innerHtml += '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+      $("ul[name=paging]").append(innerHtml)
+      init()
+    })
+  }
+
+  function EXCEL_getList() {
+    $("tbody[name=tableData]").empty()
+    var param = {}
+    param['D_SDATE'] = ($("#datepicker1").datepicker("getDate")) ? $("#datepicker1").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['D_EDATE'] = ($("#datepicker2").datepicker("getDate")) ? $("#datepicker2").datepicker("getDate").format("yyyy-MM-dd") : " "
+    param['SECHER1_TITLE'] = $("#selType").val()
+    param['SECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+
+    param['SECHER1_TITLE'] = $("#selType").val()
+    param['SECHER_TEXT'] = ($("#selText").val() == "") ? " " : $("#selText").val()
+
+    reqApiList({
+      URL: 'rice_list_excel',
+      PARAM: param
+    }).then((data) => {
+      
+      for (var i = 0; i < data.RICELIST_EXCEL.length; i++) {
+        var innerHtml = ""
+        innerHtml += '<tr>';
+        innerHtml += '<td>' + data.RICELIST_EXCEL[i].ROW_NOMBER + '</td>';
+        innerHtml += '<td>' + data.RICELIST_EXCEL[i].K_DNO + '</td>';
+        innerHtml += '<td>' + data.RICELIST_EXCEL[i].K_UID + '</td>';
+        innerHtml += '<td>' + data.RICELIST_EXCEL[i].K_IDATE + '</td>';
+        innerHtml += '<td>' + data.RICELIST_EXCEL[i].G_INOUT + '</td>';
+        innerHtml += '<td>' + data.RICELIST_EXCEL[i].K_AMT1 + '</td>';
+        innerHtml += '<td>' + data.RICELIST_EXCEL[i].K_AMT2 + '</td>';
+        innerHtml += '<td>' + data.RICELIST_EXCEL[i].BANKNAME + '</td>';
+
+        
+
+         if (data.RICELIST_EXCEL[i].K_CUR_YN == 'N') {
+          innerHtml += '<td class="tx-red">' + data.RICELIST_EXCEL[i].OK_GUBUN + '</td>';
+          
+          innerHtml += '<td><a class="btn-table-change btn-red" ></a></td>';
+         } else {
+          innerHtml += '<td>' + data.RICELIST_EXCEL[i].OK_GUBUN + '</td>';
+          innerHtml += '<td><a class="btn-table-change"> </a></td>';
+          
+         }
+  
+        innerHtml += '</tr>';
+        $("tbody[name=tableData]").append(innerHtml)
+      }
+     
+    })
+  }
+
+  
+  async function ponddeposit_OK(key) {
+    var pondkey = key
+
+    var Param = {}
+    Param['D_SEQ'] = pondkey + ""
+    Param['D_AID'] = ADMINID
+    
+
+    var r = await reqApi({
+      URL: 'riceconfirm',
+      PARAM: Param
+    })
+    switch (r.RICEOK.RESULT) {
+      case 0:
+        alert("수수료이 정상 처리되었습니다.. ")
+        break;
+      case 1:
+        break;
+        alert("존재하지 않는 회원입니다. ")
+      case 2:
+        break;
+        alert("입금구분을 선택하십시오!. ")
+      case 3:
+        break;
+        alert("수수료입금수량을 넣어주세요!. ")
+    }
+     getList()
+
+  }
+  
+  async function addrice() {
+
+   var K_UID =$("#D_UID").val()
+   var QTY   =$("#D_QTY").val()
+   var TYPE  =$("#selType").val()
+
+     
+     var Param = {}
+     Param['K_UID'] = $("#D_UID").val()
+     Param['K_QTY'] = QTY
+     Param['K_TYPE'] = $("#selType").val()
+     Param['K_AID'] = ADMINID
+    
+
+     var r = await reqApi({
+       URL: 'rice_add',
+       PARAM: Param
+     })
+     switch (r.RICEADD.RESULT) {
+       case 0:
+         alert("정상추가되었습니다.")
+         break;
+       case 1:
+         break;
+         alert("이미 취소처리 된건입니다. ")
+       case 2:
+         break;
+         alert("입금구분을 선택하여주십시오!. ")
+       case 3:
+         break;
+         alert("수수료입금 수량을 입력하여주십시오!. ")
+     }
+      getList()
+
+  }
+
+  function movePage(page) {
+    currentPage = (pageLevel * 5) + page
+    getList()
+  }
+
+  function btnPage(pos) {
+    if (pos == "bef" && currentPage > 1) {
+      currentPage--
+    } else if (pos == "next" && currentPage < totalPage) {
+      currentPage++
+    }
+    getList()
+  }
+
+async function ponddeposit_cancel(key) {
+
+
+  var pondkey = key
+
+  var Param = {}
+  Param['D_SEQ'] = pondkey + ""
+  Param['D_AID'] = ADMINID
+
+
+  var r = await reqApi({
+    URL: 'ricecancel',
+    PARAM: Param
+  })
+  switch (r.RICECAN.RESULT) {
+    case 0:
+      alert("정상 취소처리되었습니다. ")
+      break;
+    case 1:
+      break;
+      alert("이미 취소처리 된건입니다. ")
+  }
+  getList()
+
+}
+
+</script>

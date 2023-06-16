@@ -1,0 +1,780 @@
+<% include ../head %>
+
+  <body>
+    <div class="wrap">
+      <div class="row">
+        <% include ../left-menu %>
+          <div class="main-wrap">
+            <% include ../header %>
+
+              <section id="title-section">
+                <h1>이미지 서버 저장 LIST 확인</h1>
+                <div class="row">
+                  <p class="fl-l">웹사이트의 기본적인 정보를 변경하실 수 있습니다.</p>
+                  <div class="fl-r">
+                    <ul class="row">
+                      <li>거래내역</li>
+                      <li><i class="fa fa-angle-right"></i></li>
+                      <li>이미지작업</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+
+              <section id="cont-section">
+                <div class="cont-whitebox">
+
+                  <div class="conts-box pb-0">
+                    <div class="search-box border-l0 border-r0 p-5">
+                      <div class="row">
+                        <div class="w50p fl-l m-0">
+                          <div class="search-form-box row">
+                            <label class="fl-l">지정검색설정</label>
+                            <div class="select-input-box fl-l">
+                              <select id="TRADE_SECHER">
+                                <option value="">전체</option>
+                                <option value="1">아이디</option>
+                                <option value="2">이름</option>
+                                <option value="3">전화번호</option>
+                                <option value="4">이메일</option>
+                              </select>
+                              <input type="text" class="input" id="TRADE_TEXT">
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                    <div class="popup-bg2">
+                      <div id="popup" class="checkpayment">
+                        <div class="pop-title">
+                          <h2>이미지확인</h2>
+                          <a class="close"><i class="sm sm-multiply"></i></a>
+                        </div>
+                        <div class="pop-conts" id = "reciptImg1" >
+                          <!-- <img src="../views/images/logo1.png"> -->
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div class="from-section">
+                      <div class="form-tr row">
+                        <div class="w50p fl-l">
+                          <div class="form-box row">
+                            <label class="fl-l">코인</label>
+                            <div class="fl-l select-box">
+                              <select id="GUBUN">
+                                <option value="" selected>전체</option>
+                                <option value="1">CTAG</option>
+                                <option value="2">TEC</option>
+                                <option value="3">BTC</option>
+                                <option value="4">Lite</option>
+                                <option value="5">ETH</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="w50p fl-l">
+                          <div class="form-box row">
+                            <label class="fl-l">거래일자 설정</label>
+                            <div class="fl-l calendar-input-box" id="Search-time">
+                              <div class="row">
+                                <div class="calendar-input-btn-box fl-l">
+                                  <input type="text" id="datepicker1">
+                                </div>
+                                <span class="fl-l"> ~ </span>
+                                <div class="calendar-input-btn-box fl-l">
+                                  <input type="text" id="datepicker2">
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <script>
+                        $(function () {
+                          $("#datepicker1, #datepicker2").datepicker({
+                            dateFormat: 'yy.mm.dd',
+                            showOn: "both",
+                            buttonImage: "../views/images/calendar-5.png",
+                            buttonImageOnly: true,
+                            buttonText: "Select date"
+                          });
+                        });
+                      </script>
+                    </div>
+                    <div class="from-section mb-0">
+
+                      <div class="form-btn-box mb-0">
+                        <a class="btn-change" onclick="getList()">거래내역 검색하기</a>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="conts-box pb-0">
+
+                    <div class="from-section">
+                      <div class="form-title row">
+                        <h2 class="fl-l">이미지확인</h2>
+                        <div class="fl-l mt-10">
+                          <!-- <a onclick="openPop1()" id="adminSellBt"class="btn-excel-down btn-forced-sales fl-l">강제판매</a> -->
+                        </div>
+                        <div class="fl-r mt-10">
+                          <!-- <a href="#" class="btn-excel-down fl-l">엑셀 다운로드</a> -->
+                        </div>
+                      </div>
+
+                      <div class="table-box with-app-btc">
+                        <div class="table-over-box">
+                          <table border="0">
+                            <thead>
+                              <tr>
+                                <th>번호</th>
+                                <th>회원 ID</th>
+                                <th>거래 구분</th>
+                                <th>거래 코인</th>
+                                <th>기준 코인</th>
+                                <th class="tx-r">거래 수량</th>
+                                <th class="tx-r">거래 시세</th>
+                                <th class="tx-r">거래 금액</th>
+                                <th class="tx-r">거래 수수료</th>
+                                <th>거래 상태</th>
+                                <th>거래 일시</th>
+                                <th>이미지리스트</th>
+                                <th>이미지보기</th>
+                              </tr>
+                            </thead>
+                            <!-- <tbody>
+                              <tr>
+                                <td>1</td>
+                                <td>admin</td>
+                                <td>판매</td>
+                                <td>TK</td>
+                                <td>KRW</td>
+                                <td class="tx-r">1000</td>
+                                <td class="tx-r">1200</td>
+                                <td class="tx-r">1200000</td>
+                                <td class="tx-r">10</td>
+                                <td><span class="btn-s-grey">거래대기</span></td>
+                                <td>2022-01-07T09:49:59.443Z</td>
+                                <td><a class="btn-table-change btn-cancel-withdrawal"
+                                  >상세보기</a></td>
+                              </tr>
+                              <tr>
+                                <td>1</td>
+                                <td>admin</td>
+                                <td>판매</td>
+                                <td>TK</td>
+                                <td>KRW</td>
+                                <td class="tx-r">1000</td>
+                                <td class="tx-r">1200</td>
+                                <td class="tx-r">1200000</td>
+                                <td class="tx-r">10</td>
+                                <td><span class="btn-s-green">거래진행</span></td>
+                                <td>2022-01-07T09:49:59.443Z</td>
+                                <td><a class="btn-table-change btn-cancel-withdrawal"
+                                  >상세보기</a></td>
+                              </tr>
+                              <tr>
+                                <td>1</td>
+                                <td>admin</td>
+                                <td>판매</td>
+                                <td>TK</td>
+                                <td>KRW</td>
+                                <td class="tx-r">1000</td>
+                                <td class="tx-r">1200</td>
+                                <td class="tx-r">1200000</td>
+                                <td class="tx-r">10</td>
+                                <td><span class="btn-s-orange">입금확인중</span></td>
+                                <td>2022-01-07T09:49:59.443Z</td>
+                                <td><a class="btn-table-change btn-cancel-withdrawal"
+                                  >상세보기</a></td>
+                              </tr>
+                              <tr>
+                                <td>1</td>
+                                <td>admin</td>
+                                <td>판매</td>
+                                <td>TK</td>
+                                <td>KRW</td>
+                                <td class="tx-r">1000</td>
+                                <td class="tx-r">1200</td>
+                                <td class="tx-r">1200000</td>
+                                <td class="tx-r">10</td>
+                                <td><span class="btn-s-blue">입금완료</span></td>
+                                <td>2022-01-07T09:49:59.443Z</td>
+                                <td><a class="btn-table-change btn-cancel-withdrawal"
+                                  >상세보기</a></td>
+                              </tr>
+                              <tr>
+                                <td>1</td>
+                                <td>admin</td>
+                                <td>판매</td>
+                                <td>TK</td>
+                                <td>KRW</td>
+                                <td class="tx-r">1000</td>
+                                <td class="tx-r">1200</td>
+                                <td class="tx-r">1200000</td>
+                                <td class="tx-r">10</td>
+                                <td><span class="btn-s-red">취소</span></td>
+                                <td>2022-01-07T09:49:59.443Z</td>
+                                <td><a class="btn-table-change btn-cancel-withdrawal"
+                                  >상세보기</a></td>
+                              </tr>
+                            </tbody> -->
+
+                            <tbody name="tableData">
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="paging fl-r">
+                          <ul class="row" name="paging">
+                            <li><a><i class="fa fa-angle-left"></i></a></li>
+                            <li><a class="active">1</a></li>
+                            <li><a>2</a></li>
+                            <li><a>3</a></li>
+                            <li><a>4</a></li>
+                            <li><a>5</a></li>
+                            <li><a><i class="fa fa-angle-right"></i></a></li>
+                          </ul>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </section>
+
+
+          </div>
+      </div>
+    </div>
+    <div class="popup-bg">
+      <div id="popup" class="trade-list">
+
+        <div class="pop-title">
+          <h2> 이미지 보기 </h2>
+          <a class="close"><i class="sm sm-multiply"></i></a>
+        </div>
+
+        <div class="pop-conts">
+          <div class="pop-form-box row">
+            <p class="fl-l">회원 ID</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="C_UID" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 구분</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="TR_GUBUN" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 코인</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="C_SNAME" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">기준 코인</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="C_STAN_SNAME" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 수량</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="C_QTY" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 시세</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="C_RATE" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 금액</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="C_AMT" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 수수료</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="C_FEE" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">이미지 파일명 </p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="C_STATE" readonly>
+            </div>
+          </div>
+          <!-- <div class="pop-form-box row">
+            <p class="fl-l">거래 일시</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="C_IDATE" readonly>
+            </div>
+          </div> -->
+
+          <div class="pop-btn-box row mrow">
+
+            <div class="w50p fl-l">
+              <a class="btn-m-dark btn-checkpayment" style="display:inline">입금이미지 확인 </a>
+            </div>
+          </div>
+          <!-- <div class="pop-form-box row">
+      			<p class="fl-l">취소사유</p>
+      			<div class="pop-input-box fl-l">
+      				<textarea></textarea>
+      			</div>
+      		</div> -->
+
+
+          <!-- <div class="pop-table">
+
+            <div class="table-over-box pop-trade-exchange-list">
+              <table border="0">
+                <thead>
+                  <tr>
+                    <th>분류</th>
+                    <th>구매일시</th>
+                    <th>판매일시</th>
+                    <th class="tx-r">구매금액</th>
+                    <th class="tx-r">판매금액</th>
+                    <th class="tx-r">자동구매 수수료</th>
+                    <th class="tx-r">수당수수료</th>
+                  </tr>
+                </thead>
+                <tbody name="popData">
+                </tbody>
+              </table>
+            </div>
+
+          </div> -->
+
+          <!-- <div class="pop-btn-box row mrow">
+            <div class="w50p fl-l">
+              <a class="btn-pop btn-red close">닫기</a>
+            </div>
+            <div class="w50p fl-l">
+              <a class="btn-pop" onclick="adminTrancefer()">SEND</a>
+            </div>
+          </div> -->
+
+        </div>
+
+      </div>
+
+
+
+      <div id="popup" class="forced-sales">
+
+        <div class="pop-title">
+          <h2>강제판매</h2>
+          <a class="close"><i class="sm sm-multiply"></i></a>
+        </div>
+
+        <div class="pop-conts">
+          <div class="pop-form-box row">
+            <p class="fl-l">판매자 ID</p>
+            <div class="pop-select-box fl-l">
+              <select id="idList">
+              </select>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 구분</p>
+            <div class="pop-select-box fl-l">
+              <select id = "S_GUBUN">
+                <option value="SELL">판매</option>
+                <!-- <option value="BUY">구매</option> -->
+              </select>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 코인</p>
+            <div class="pop-select-box fl-l">
+              <select id = "S_ORDER_COIN">
+              </select>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">기준 코인</p>
+            <div class="pop-select-box fl-l">
+            <select id="S_STAN_COIN">
+              <option value="KRW">KRW</option>
+              <!-- <option value="USD">USD</option> -->
+            </select>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 수량</p>
+            <div class="pop-input-box fl-l">
+              <input type="number" class="input" id="S_QTY" onkeyup="changeQty()">
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 시세</p>
+            <div class="pop-input-box fl-l">
+              <input type="number" class="input" id="S_RATE" onkeyup="changeRate()">
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 금액</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="S_AMOUNT" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">거래 수수료</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="S_FEE" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">은행</p>
+            <div class="pop-select-box fl-l">
+              <select id="S_BANK_NO" onchange="selectBanks()">
+              </select>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">계좌번호</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="B_ACCOUNT" readonly>
+            </div>
+          </div>
+          <div class="pop-form-box row">
+            <p class="fl-l">예금주</p>
+            <div class="pop-input-box fl-l">
+              <input type="text" class="input" id="B_BOWNER" readonly>
+            </div>
+          </div>
+
+          <div class="pop-btn-box">
+            <div class="row mrow">
+              <div class="w50p fl-l">
+                <a class="btn-pop close" onclick="closeAdminSell()">닫기</a>
+              </div>
+              <div class="w50p fl-l">
+                <a class="btn-pop close" onclick="doAdminSell()">강제 판매</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="popup-bg2">
+      <div id="popup" class="checkpayment">
+        <div class="pop-title">
+          <h2>이미지확인</h2>
+          <a class="close"><i class="sm sm-multiply"></i></a>
+        </div>
+        <div class="pop-conts" id = "reciptImg" >
+          <!-- <img src="../views/images/logo1.png"> -->
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+  <script src="../views/include/js/bootstrap.min.js"></script>
+  <script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+  <script src="../views/include/js/waves.js"></script>
+  <script>
+    var HISDATA;
+
+    $(".btn-checkpayment").click(function(){
+      $(".popup-bg2").fadeIn(200, function () {
+        $("#popup.checkpayment").fadeIn(500);
+      });
+    });
+    $("#popup.checkpayment a.close").click(function () {
+      $("#popup.checkpayment").fadeOut(500, function () {
+        $(".popup-bg2").fadeOut(200);
+      });
+    });
+
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const gubun = urlParams.get("gubun");
+
+    var nowPages = 1;
+    var pageRange = 5;
+    var currentPage = 1;
+    var pageLevel = 0;
+    var totalPage = 0;
+    var sMemberId = "";
+    var data;
+    var ListDATA;
+    $(document).ready(() => {
+      getList()
+      if(gubun !== "S")
+        $("#adminSellBt").remove()
+    })
+    function changeQty(){
+      const qty = $("#S_QTY").val()
+      $("#S_FEE").val(qty * 0.01)
+
+      changeAmount($("#S_RATE").val(), qty)
+    }
+    function changeRate(){
+       changeAmount($("#S_RATE").val(), $("#S_QTY").val())
+    }
+
+    function changeAmount(rate , qty){
+      if(rate>0&& qty>0)
+        $("#S_AMOUNT").val(rate * qty)
+    }
+
+
+    function getList() {
+      $("tbody[name=tableData]").empty()
+      var param = {}
+      param['TRADE_SECHER'] = ($("#TRADE_SECHER").val() == "") ? " " : $("#TRADE_SECHER").val()
+      param['TRADE_TEXT'] = ($("#TRADE_TEXT").val() == "") ? " " : $("#TRADE_TEXT").val()
+      param['TRADE_GUBUN'] = gubun || "A"
+      param['GUBUN'] = ($("#GUBUN").val() == "") ? " " : $("#GUBUN").val()
+      param['CGUBUN'] = ' '
+      param['D_SDATE'] = ($("#datepicker1").datepicker("getDate")) ? $("#datepicker1").datepicker("getDate").format("yyyy-MM-dd") : " "
+      param['D_EDATE'] = ($("#datepicker2").datepicker("getDate")) ? $("#datepicker2").datepicker("getDate").format("yyyy-MM-dd") : " "
+      param['CNT'] = 'true'
+      param['CUR_PAGING'] = currentPage + ""
+      param['PAGING_NO'] = "10"
+      reqApiList({
+        URL: 'getTradeList',
+        PARAM: param
+      }).then((data) => {
+        ListDATA = data.TRADLIST
+        if (data.CNT.ALL_CNT != 0) {
+          cnt = data.CNT.ALL_CNT
+          totalPage = Math.floor(cnt / 10) + ((cnt % 10 != 0) ? 1 : 0)
+          pageLevel = Math.floor(currentPage / (pageRange + 1))
+          nowPages = (totalPage - (pageLevel * 5) > 5) ? 5 : totalPage - (pageLevel * 5)
+        }
+        for (var i = 0; i < ListDATA.length; i++) {
+          var innerHtml = ""
+          innerHtml += '<tr>';
+          innerHtml += '<td>' + ListDATA[i].ROW_NOMBER + '</td>';
+          innerHtml += '<td>' + ListDATA[i].C_UID + '</td>';
+          innerHtml += '<td>' + ListDATA[i].TR_GUBUN + '</td>';
+          innerHtml += '<td>' + ListDATA[i].C_SNAME + '</td>';
+          innerHtml += '<td>' + ListDATA[i].C_STAN_SNAME + '</td>';
+          innerHtml += '<td class="tx-r">' + ListDATA[i].C_QTY + '</td>';
+          innerHtml += '<td class="tx-r">' + ListDATA[i].C_RATE + '</td>';
+          innerHtml += '<td class="tx-r">' + ListDATA[i].C_AMT + '</td>';
+          innerHtml += '<td class="tx-r">' + ListDATA[i].C_FEE + '</td>';
+          if(ListDATA[i].C_STATE === "N"){
+            innerHtml += '<td><span class="btn-s-grey">거래신청</span></td>';
+          }else if(ListDATA[i].C_STATE === 'I'){
+            innerHtml += '<td><span class="btn-s-green">거래중</span></td>';
+          }else if(ListDATA[i].C_STATE === 'W'){
+            innerHtml += '<td><span class="btn-s-orange">입금확인중</span></td>';
+          }else if(ListDATA[i].C_STATE === 'Y'){
+            innerHtml += '<td><span class="btn-s-blue">거래완료</span></td>';
+          }else if(ListDATA[i].C_STATE === 'C'){
+            innerHtml += '<td><span class="btn-s-red">거래취소</span></td>';
+          }
+          innerHtml += '<td>' + ListDATA[i].C_IDATE + '</td>';
+
+
+          innerHtml += '<td><img id="imgControll" name="imgControll" src="https://gtauction.cafe24.com/'+ ListDATA[i].IMG_PATH + '" width="150" height="100"></td>';
+          innerHtml += '<td><a class="btn-table-change btn-cancel-withdrawal" onclick="openPop(' + i + ')">상세보기</a></td>';
+          innerHtml += '</tr>';
+          $("tbody[name=tableData]").append(innerHtml)
+        }
+
+
+        var innerHtml = '';
+        innerHtml += '<li class="" onclick="btnPage(\'bef\')"> <a href="#"><i class="fa fa-angle-left"></i></a> </li>';
+        $("ul[name=paging]").empty()
+        for (var i = 1; i <= nowPages; i++) {
+          if (currentPage == i) {
+            innerHtml += '<li onclick="movePage(' + i + ')"> <a class="active">' + ((pageLevel * 5) + i) + '</a> </li>';
+          } else {
+            innerHtml += '<li onclick="movePage(' + i + ')"> <a>' + ((pageLevel * 5) + i) + '</a> </li>';
+          }
+        }
+        innerHtml += '<li onclick="btnPage(\'next\')"> <a href="#"><i class="fa fa-angle-right"></i></a> </li>';
+        $("ul[name=paging]").append(innerHtml)
+        $("#popup.trade-list a.close").click(function () {
+          $("#popup.trade-list").fadeOut(200, function () {
+            $(".popup-bg").fadeOut(200);
+          });
+        });
+      })
+    }
+
+
+
+
+
+    let ADMINBANKLIST;
+    function openPop(idx) {
+
+      $("tbody[name=popData]").empty()
+
+      HISDATA = ListDATA[idx]
+      $("#reciptImg").empty()
+      if(HISDATA.IMG_PATH)
+        $("#reciptImg").html('<img src="https://gtauction.cafe24.com/'+ HISDATA.IMG_PATH+'">')
+      commonLib.bindValue(HISDATA)
+      var innerHtml = ""
+      var gubun = (HISDATA.STATUS == '3') ? '<td class="tx-red">판매완료</td>' : '<td class="tx-blue">구매완료</td>'
+      innerHtml += '<tr>';
+      innerHtml += gubun;
+      innerHtml += '<td>' + HISDATA.M_MACHDATE + '</td>';
+      innerHtml += '<td>' + HISDATA.M_OKDATE + '</td>';
+      innerHtml += '<td class="tx-r">' + HISDATA.M_BUYAMOUNT + '</td>';
+      innerHtml += '<td class="tx-r">' + HISDATA.M_SELLAMOUNT + '</td>';
+      innerHtml += '<td class="tx-r">' + HISDATA.M_AUTOFEE + '</td>';
+      innerHtml += '<td class="tx-r">' + HISDATA.M_SUDANG + '</td>';
+      innerHtml += '</tr>';
+      $("tbody[name=popData]").append(innerHtml)
+      $(".popup-bg").fadeIn(200, function () {
+        $("#popup.trade-list").fadeIn(500);
+      });
+    }
+    async function openPop1(){
+      reqApiList({
+        URL: 'getCoinList'
+      }).then((data) => {
+        $("#S_ORDER_COIN").empty()
+        data.COINLIST.forEach(coin=>{
+          let innerHtml = '<option value="' + coin.C_TYPE + '">' + coin.C_SNAME + '</option>';
+          $("#S_ORDER_COIN").append(innerHtml)
+        })
+      })
+      reqApiList({
+        URL: 'getComUidList'
+      }).then((data) => {
+        $("#idList").empty()
+        data.COMUIDLIST.forEach(uid=>{
+          let innerHtml = '<option value="'+ uid.C_NO+'">' + uid.C_UID +'</option>';
+          $("#idList").append(innerHtml)
+        })
+
+      })
+      reqApiList({
+        URL: 'getAdminBankList'
+      }).then((data) => {
+        $("#S_BANK_NO").empty()
+        $("#S_BANK_NO").append('<option value="">선택</option>')
+        ADMINBANKLIST = data.ADMINBANKLIST
+        ADMINBANKLIST.forEach(bank => {
+          let innerHtml = '<option value="' + bank.PD_NO + '">' + bank.B_NAME + '</option>';
+          $("#S_BANK_NO").append(innerHtml)
+        })
+      })
+    }
+
+    function selectBanks(){
+      const val = $("#S_BANK_NO").val()
+      ADMINBANKLIST.forEach(bank => {
+        if(val == bank.PD_NO){
+          $("#B_BOWNER").val(bank.B_BOWNER)
+          $("#B_ACCOUNT").val(bank.B_ACCOUNT)
+          return
+        }
+      })
+
+    }
+    function closeAdminSell(){
+      $("#popup.forced-sales").fadeOut(500, function () {
+        $(".popup-bg").fadeOut(200);
+      });
+    }
+
+    function doAdminSell(){
+      var param = {}
+      param['A_NO'] = $("#idList").val()
+      param['GUBUN'] = $("#S_GUBUN").val()
+      param['ORDER_COIN'] = $("#S_ORDER_COIN").val()
+      param['STAN_COIN'] = $("#S_STAN_COIN").val()
+      param['QTY'] = $("#S_QTY").val()
+      param['RATE'] = $("#S_RATE").val()
+      param['AMOUNT'] = $("#S_AMOUNT").val()
+      param['FEE'] = $("#S_FEE").val()
+      param['BANK_NO'] = $("#S_BANK_NO").val()
+
+      reqApi({
+        URL: 'coinSell',
+        PARAM: param
+      }).then(data => {
+        if(data.COINSELL["RESULT"] == 0){
+          alert("정상 판매 등록 되었습니다")
+        }else if (data.COINSELL["RESULT"] == 1){
+          alert("정상 판매 등록 되었습니다")
+        } else if (data.COINSELL["RESULT"] == 2) {
+          alert("정상 판매 등록 되었습니다")
+        } else if (data.COINSELL["RESULT"] == 3) {
+          alert("정상 판매 등록 되었습니다")
+        } else if (data.COINSELL["RESULT"] == 4) {
+          alert("정상 판매 등록 되었습니다")
+        } else{
+          alert("에러 발생")
+        }
+        closeAdminSell()
+        location.reload()
+      })
+    }
+
+    async function adminTrancefer(){
+      let param = {}
+      console.log(HISDATA);
+      if(HISDATA.C_STATE === "W" && HISDATA.TR_GUBUN === "판매"){
+        param['USER_ID'] = HISDATA.C_UID
+        param['B_IDX'] = HISDATA.T_B_IDX
+        param['S_IDX'] = HISDATA.T_S_IDX
+        const r = await reqApi({
+          URL: 'adminRequestTransfer',
+          PARAM: param
+        })
+        alert("전송 완료")
+        location.reload()
+      }else{
+        alert("입금 대기중인 건만 전송 가능 합니다")
+      }
+
+    }
+
+    function movePage(page) {
+      currentPage = (pageLevel * 5) + page
+      getList()
+    }
+
+    function btnPage(pos) {
+      if (pos == "bef" && currentPage > 1) {
+        currentPage--
+      } else if (pos == "next" && currentPage < totalPage) {
+        currentPage++
+      }
+      getList()
+    }
+
+
+    $(".btn-forced-sales").click(function(){
+      $(".popup-bg").fadeIn(200, function(){
+    		$("#popup.forced-sales").fadeIn(500);
+    	});
+    });
+
+
+
+  </script>

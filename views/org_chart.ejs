@@ -1,0 +1,106 @@
+<% include ./head %>
+
+<body>
+  <div class="wrap">
+    <div class="row">
+      <% include ./left-menu %>
+      <div class="main-wrap">
+        <% include ./header %>
+        <section id="title-section">
+          <h1>조직표</h1>
+          <div class="row">
+            <p class="fl-l">전체 조직표를 확인가능합니다.</p>
+          </div>
+        </section>
+        <section id="cont-section">
+          <div class="cont-whitebox">
+            <div class="conts-box pb-0">
+
+              <div class="from-section border-t1">
+                <div class="form-tr row">
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">회원명</label>
+                      <div class="input-box fl-l">
+                        <input type="text" class="input" value="" id="sid">
+                        <p class="error">ex) </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w50p fl-l">
+                    <div class="form-box row">
+                      <label class="fl-l">레벨</label>
+                      <div class="select-box fl-l">
+                        <select>
+                          <option>Level 1</option>
+                          <option>Level 2</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="from-section mb-0">
+                <div class="form-btn-box mb-0">
+                  <a class="btn-change" onClick="showChart()">그리기</a>
+                </div>
+              </div>
+            </div>
+            <div class="conts-box pb-0">
+              <div class="orgchart">
+                <div id="tree" ref="tree" style="width:100%; height:100vh">
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://admin.ai-crew.net/OrgChart.js"></script>
+<script src="../views/include/js/bootstrap.min.js"></script>
+<script src="../views/include/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="../views/include/js/waves.js"></script>
+<script>
+
+
+  function showChart() {
+    // if($("#sid").val()!=""){
+       $("#tree").empty()
+    //   $("#tree").append(chartHtml)
+    // }
+
+  // }
+    var chart = new OrgChart(document.getElementById("tree"), {
+    mouseScrool: OrgChart.action.none,
+    menu: {
+        pdf: { text: "Export PDF" },
+        png: { text: "Export PNG" },
+        svg: { text: "Export SVG" },
+        csv: { text: "Export CSV" },
+        json: { text: "Export JSON" }
+    },
+    nodeMenu: {
+        pdf: { text: "Export PDF" },
+        png: { text: "Export PNG" },
+        svg: { text: "Export SVG" }
+    },
+    nodeBinding: {
+        field_0: "name",
+        field_1: "title",
+        img_0: "img"
+    },
+    nodes: [
+        { id: 1, name: "Billy Moore", title: "CEO", img: "https://cdn.balkan.app/shared/2.jpg" },
+        { id: 2, pid: 1, name: "Billie Rose", title: "Dev Team Lead", img: "https://cdn.balkan.app/shared/5.jpg" },
+
+        { id: 3, pid: 1, name: "Glenn Bell", title: "HR", img: "https://cdn.balkan.app/shared/10.jpg" },
+        { id: 4, pid: 3, name: "Blair Francis", title: "HR", img: "https://cdn.balkan.app/shared/11.jpg" }
+    ]
+  });
+}
+console.log(chart);
+$("#tree").append(chart)
+
+</script>
