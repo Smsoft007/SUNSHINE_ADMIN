@@ -50,6 +50,7 @@
     "socket.io": "^2.0.4",
     "socket.io-cookie-parser": "^1.0.0",
     "tedious": "~2.2.4",
+    "tronweb": "^5.2.0",
     "web3": "^0.20.7",
     "winston": "^2.4.0",
     "winston-daily-rotate-file": "^1.7.2"

@@ -52,11 +52,11 @@ serverInfo['BTC'] = {
 //   database: 'GOLDDUCK'
 // };
 serverInfo['MSSQL'] = {
-  user: 'AICREW_ADMIN_USER',
-  password: 'RAtkW5MWH1J7DkkWR1q7ya14oZGZg3Fu',
+  user: 'GOLDKEY_ADMIN_USER',
+  password: '455qwdk184Y1Ba867O2W484K9DO27KdL',
   server: '222.239.193.199',
   port: '49987',
-  database: 'AICREW',
+  database: 'GOLDKEY',
 };
 
 // serverInfo['MSSQL'] = {
