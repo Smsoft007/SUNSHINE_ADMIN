@@ -56,6 +56,7 @@ io.use(function(socket, next) {
   if (commonLib.isNull(sid)) {
     return;
   }
+  
   var sessionID = sid.replace(prefix, "");
   sessionID = signature.unsign(sessionID, OPTIONS['SESSION_SECRET']);
   logger.debug('socket:sessionID : ' + sessionID);

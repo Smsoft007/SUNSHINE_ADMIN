@@ -1,19 +1,12 @@
-<%
-      String a = "Hello! JSP"; //String 형 변수를 선언하여 = 다음 구문을 저장
-      out.println(a); // 출력문
-%>
-
-
-<%=XXJANGS%>
 
 .jwtext {
 display: none;
 }
 
-.jwtext:after {
+/* .jwtext:after {
 display: block;
 content: "<%=XXJANGS%>";
-}
+} */
 
 .wrap {
 	width:100%;
@@ -1752,7 +1745,7 @@ textarea {
 /************************ signin **************************/
 
 .signin-bg {
-	background: url(../../images/signin-bg.png) no-repeat;
+	background: url(../../images/singin-bg.gif) no-repeat;
 	background-size:cover;
 	width:100%;
 	min-height:100vh;
