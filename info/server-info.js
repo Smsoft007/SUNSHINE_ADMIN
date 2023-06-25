@@ -7,13 +7,13 @@ serverInfo['ALT_COIN_UNIT'] = 'TIC';
 serverInfo['REDIS_ON'] = false;
 
 serverInfo['REDIS'] = {
-  address: 'localhost',
-  port: 6379,
+    address: 'localhost',
+    port: 6379,
 };
 serverInfo.initialize = function () {
-  app = require('../app');
-  serverInfo['ROOT_PATH'] = app.rootPath;
-  serverInfo['MAIL_FORM_FILE_PATH'] = app.rootPath + '/views/';
+    app = require('../app');
+    serverInfo['ROOT_PATH'] = app.rootPath;
+    serverInfo['MAIL_FORM_FILE_PATH'] = app.rootPath + '/views/';
 };
 // serverInfo['BTC'] = {
 //   host: 'localhost',
@@ -23,18 +23,18 @@ serverInfo.initialize = function () {
 //   timeout: 15000
 // }
 serverInfo['NEC_BTC'] = {
-  host: '138.68.50.214',
-  port: 8332,
-  username: 'USER',
-  password: 'PASS',
-  timeout: 15000,
+    host: '138.68.50.214',
+    port: 8332,
+    username: 'USER',
+    password: 'PASS',
+    timeout: 15000,
 };
 serverInfo['BTC'] = {
-  host: '138.68.50.214',
-  port: 8332,
-  user: 'USER',
-  pass: 'PASS',
-  timeout: 15000,
+    host: '138.68.50.214',
+    port: 8332,
+    user: 'USER',
+    pass: 'PASS',
+    timeout: 15000,
 };
 // serverInfo['ADMIN_BTC'] = {
 //   host: '167.99.7.146',
@@ -52,11 +52,11 @@ serverInfo['BTC'] = {
 //   database: 'GOLDDUCK'
 // };
 serverInfo['MSSQL'] = {
-  user: 'GOLDKEY_ADMIN_USER',
-  password: '455qwdk184Y1Ba867O2W484K9DO27KdL',
-  server: '222.239.193.199',
-  port: '49987',
-  database: 'GOLDKEY',
+    user: 'SUNSHIN_ADMIN_USER',
+    password: 'uTEiw5Tv6L2iO4diMvUPORTea21rclFI',
+    server: '222.239.193.199',
+    port: '49987',
+    database: 'SUNSHINE',
 };
 
 // serverInfo['MSSQL'] = {
@@ -69,13 +69,13 @@ serverInfo['MSSQL'] = {
 var CoinType = require('../lib/coinHelper').CoinType;
 
 serverInfo['COIN-INFO'] = [
-  //{name: 'ALT', type: CoinType.BIT}
-  // {name: 'USDTB', type: CoinType.BIT},
-  // {name: 'USDTE', type: CoinType.ETH},
+    //{name: 'ALT', type: CoinType.BIT}
+    // {name: 'USDTB', type: CoinType.BIT},
+    // {name: 'USDTE', type: CoinType.ETH},
 ];
 
 serverInfo['JSONRPC'] = {
-  pendingTime: 1000 * 60 * 2,
+    pendingTime: 1000 * 60 * 2,
 };
 
 serverInfo['UPLOADIMAGEPATH'] = '/home/jeak/server/views/img/receipt/';
@@ -99,8 +99,8 @@ serverInfo['OUTPWD'] = '2K$*ixMYX6zI';
 //   ETH:"https://api.coinmarketcap.com/v1/ticker/ethereum/"
 // };
 serverInfo['COIN_RATE'] = {
-  BTC: 'https://api.coinhills.com/v1/cspa/btc/',
-  ETH: 'https://api.coinhills.com/v1/cspa/eth/',
-  TRX: 'https://api.coinhills.com/v1/cspa/trx/',
+    BTC: 'https://api.coinhills.com/v1/cspa/btc/',
+    ETH: 'https://api.coinhills.com/v1/cspa/eth/',
+    TRX: 'https://api.coinhills.com/v1/cspa/trx/',
 };
 module.exports = serverInfo;
